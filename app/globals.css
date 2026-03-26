@@ -2,26 +2,141 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #09090B;
+  --surface: #141416;
+  --surface-border: #1F1F23;
+  --primary: #00FF6A;
+  --danger: #FF3B3B;
+  --warning: #FFB800;
+  --text-primary: #FAFAFA;
+  --text-secondary: #8B8B8B;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--text-primary);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Price ticker styling */
+.price-ticker {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1F1F23;
+  border-radius: 2px;
+}
+
+/* Hide scrollbar for horizontal carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(20, 20, 22, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #1F1F23;
+  border-radius: 16px;
+}
+
+/* Signal card glow effects */
+.signal-fill-now {
+  box-shadow: 0 0 30px rgba(0, 255, 106, 0.2), inset 0 0 30px rgba(0, 255, 106, 0.05);
+  border-color: rgba(0, 255, 106, 0.3);
+}
+
+.signal-wait, .signal-fill-soon {
+  box-shadow: 0 0 30px rgba(255, 59, 59, 0.2), inset 0 0 30px rgba(255, 59, 59, 0.05);
+  border-color: rgba(255, 59, 59, 0.3);
+}
+
+.signal-hold {
+  box-shadow: 0 0 30px rgba(255, 184, 0, 0.2), inset 0 0 30px rgba(255, 184, 0, 0.05);
+  border-color: rgba(255, 184, 0, 0.3);
+}
+
+/* Skeleton loading */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #1F1F23 25%, #2a2a2e 50%, #1F1F23 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+/* Leaflet dark mode overrides */
+.leaflet-container {
+  background: #09090B !important;
+}
+
+.leaflet-control-zoom a {
+  background: #141416 !important;
+  color: #FAFAFA !important;
+  border-color: #1F1F23 !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(20, 20, 22, 0.8) !important;
+  color: #8B8B8B !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a {
+  color: #8B8B8B !important;
+}
+
+/* Bottom safe area for mobile */
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 16px);
+}
+
+/* Active tap state */
+.tap-active:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
 }
