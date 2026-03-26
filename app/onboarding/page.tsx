@@ -19,7 +19,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-surface flex flex-col">
       <AnimatePresence mode="wait">
         {step === 0 && (
           <motion.div
@@ -65,7 +65,7 @@ export default function OnboardingPage() {
           <div
             key={i}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              i === step ? 'bg-primary w-6' : i < step ? 'bg-primary/50' : 'bg-surface-border'
+              i === step ? 'bg-primary w-6' : i < step ? 'bg-primary/50' : 'bg-outline-variant/30'
             }`}
           />
         ))}

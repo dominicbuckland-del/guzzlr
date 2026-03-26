@@ -23,7 +23,7 @@ export default function RewardsPage() {
 
   if (loading) {
     return (
-      <div className="px-4 pt-6 space-y-4">
+      <div className="px-4 pt-6 space-y-4 bg-surface min-h-screen">
         <SkeletonCard />
         <SkeletonCard />
         <SkeletonCard />
@@ -50,39 +50,39 @@ export default function RewardsPage() {
   const bestFill = [...fillups].sort((a, b) => b.savedCents - a.savedCents)[0]
 
   return (
-    <div className="px-4 pt-6 space-y-4 animate-fade-in">
-      <h1 className="font-heading text-2xl font-bold">Rewards</h1>
+    <div className="px-4 pt-6 space-y-4 animate-fade-in bg-surface min-h-screen">
+      <h1 className="font-headline text-2xl font-bold text-on-surface">Rewards</h1>
 
-      {/* XP / Level Card */}
-      <div className="glass-card p-5">
+      {/* XP / Level Card — orange gradient streak card */}
+      <div className="bg-primary-container rounded-2xl p-5 text-white">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-text-secondary text-xs">TOTAL SAVED</p>
+          <p className="text-white/80 text-xs uppercase tracking-widest font-headline font-bold">Total Saved</p>
           <span className="text-2xl">{levelInfo.icon}</span>
         </div>
         <AnimatedNumber
           value={user.totalSavedCents / 100}
           prefix="$"
-          className="price-ticker text-4xl text-primary"
+          className="font-headline font-bold text-4xl text-white"
         />
-        <p className="text-text-secondary text-sm mt-1">since joining Guzzlr</p>
+        <p className="text-white/70 text-sm mt-1">since joining Guzzlr</p>
 
         <div className="mt-4">
           <div className="flex items-center justify-between mb-1">
-            <span className="font-heading font-bold text-sm">
+            <span className="font-headline font-bold text-sm text-white">
               Level {levelInfo.level}: {levelInfo.name}
             </span>
-            <span className="text-text-secondary text-xs">
+            <span className="text-white/70 text-xs">
               {user.xp.toLocaleString()} / {levelInfo.maxXp === Infinity ? '∞' : (levelInfo.maxXp + 1).toLocaleString()} XP
             </span>
           </div>
-          <div className="w-full bg-surface-border rounded-full h-3 overflow-hidden">
+          <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden">
             <div
-              className="h-full bg-primary rounded-full transition-all duration-1000"
+              className="h-full bg-white rounded-full transition-all duration-1000"
               style={{ width: `${xpProgress * 100}%` }}
             />
           </div>
           {xpToNext > 0 && (
-            <p className="text-text-secondary text-xs mt-1">
+            <p className="text-white/60 text-xs mt-1">
               {xpToNext.toLocaleString()} XP to next level
             </p>
           )}
@@ -90,13 +90,13 @@ export default function RewardsPage() {
       </div>
 
       {/* Tab selector */}
-      <div className="flex bg-surface rounded-lg p-0.5">
+      <div className="flex bg-surface-container-low rounded-xl p-0.5">
         {(['savings', 'achievements', 'leaderboard'] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`flex-1 py-2 rounded-md text-xs font-medium transition-colors capitalize ${
-              tab === t ? 'bg-primary text-background' : 'text-text-secondary'
+            className={`flex-1 py-2 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-all ${
+              tab === t ? 'bg-primary text-white' : 'text-on-surface-variant'
             }`}
           >
             {t}
@@ -107,43 +107,45 @@ export default function RewardsPage() {
       {tab === 'savings' && (
         <div className="space-y-4 animate-fade-in">
           {/* Monthly summary */}
-          <div className="glass-card p-4">
-            <h3 className="font-heading font-bold text-sm text-text-secondary mb-2">
+          <div className="puffy-card p-4">
+            <h3 className="font-headline font-bold text-xs text-on-surface-variant mb-2 uppercase tracking-widest">
               {new Date().toLocaleDateString('en-AU', { month: 'long' })}
             </h3>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-text-secondary text-xs">Saved</p>
-                <p className="price-ticker text-2xl text-primary">${monthlySaved.toFixed(2)}</p>
+                <p className="text-on-surface-variant text-xs uppercase tracking-widest font-headline">Saved</p>
+                <p className="font-headline font-bold text-2xl text-primary">${monthlySaved.toFixed(2)}</p>
               </div>
               <div className="text-right">
-                <p className="text-text-secondary text-xs">Fills</p>
-                <p className="price-ticker text-2xl">{monthlyFills}</p>
+                <p className="text-on-surface-variant text-xs uppercase tracking-widest font-headline">Fills</p>
+                <p className="font-headline font-bold text-2xl text-on-surface">{monthlyFills}</p>
               </div>
             </div>
           </div>
 
           {/* Best fill */}
           {bestFill && bestFill.savedCents > 0 && (
-            <div className="glass-card p-4">
-              <h3 className="font-heading font-bold text-sm text-text-secondary mb-2">Best Fill Ever</h3>
-              <p className="text-text-primary">
-                Saved <span className="text-primary font-heading font-bold">${(bestFill.savedCents / 100).toFixed(2)}</span> at {bestFill.stationName}
+            <div className="puffy-card p-4">
+              <h3 className="font-headline font-bold text-xs text-on-surface-variant mb-2 uppercase tracking-widest">Best Fill Ever</h3>
+              <p className="text-on-surface">
+                Saved <span className="text-primary font-headline font-bold">${(bestFill.savedCents / 100).toFixed(2)}</span> at {bestFill.stationName}
               </p>
-              <p className="text-text-secondary text-xs mt-1">
+              <p className="text-on-surface-variant text-xs mt-1">
                 {new Date(bestFill.filledAt).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}
               </p>
             </div>
           )}
 
-          {/* Streak */}
-          <div className="glass-card p-4">
-            <h3 className="font-heading font-bold text-sm text-text-secondary mb-2">Current Streak</h3>
+          {/* Streak — yellow progress badge */}
+          <div className="puffy-card p-4">
+            <h3 className="font-headline font-bold text-xs text-on-surface-variant mb-2 uppercase tracking-widest">Current Streak</h3>
             <div className="flex items-center gap-3">
-              <span className="text-4xl">🔥</span>
+              <div className="w-14 h-14 rounded-full bg-secondary-container flex items-center justify-center">
+                <span className="material-symbols-outlined text-2xl text-on-surface">local_fire_department</span>
+              </div>
               <div>
-                <p className="price-ticker text-3xl">{user.streakCount}</p>
-                <p className="text-text-secondary text-sm">fills beating the average</p>
+                <p className="font-headline font-bold text-3xl text-on-surface">{user.streakCount}</p>
+                <p className="text-on-surface-variant text-sm">fills beating the average</p>
               </div>
             </div>
           </div>

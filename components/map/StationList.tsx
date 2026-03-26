@@ -39,25 +39,25 @@ export default function StationList({ fuelType: fuelTypeOverride, brandFilter }:
   }, [fuelType, brandFilter, car, user, userLat, userLng])
 
   return (
-    <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-2">
+    <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-2 bg-surface">
       {stations.map((station, i) => (
-        <div key={station.id} className="glass-card p-3 flex items-center gap-3">
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-heading font-bold text-sm ${
-            i < 3 ? 'bg-primary/20 text-primary' : 'bg-surface text-text-secondary'
+        <div key={station.id} className="puffy-card p-3 flex items-center gap-3">
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-headline font-bold text-sm ${
+            i < 3 ? 'bg-[#fff0ea] text-primary' : 'bg-surface-container-low text-on-surface-variant'
           }`}>
             {i + 1}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-medium text-sm truncate">{station.name}</p>
-            <p className="text-text-secondary text-xs">{station.distance}km away</p>
+            <p className="font-medium text-sm text-on-surface truncate">{station.name}</p>
+            <p className="text-on-surface-variant text-xs">{station.distance}km away</p>
           </div>
           <div className="text-right">
-            <p className="price-ticker text-lg text-primary">{station.price ? formatPrice(station.price) : '--'}</p>
+            <p className="font-headline font-bold text-lg text-primary">{station.price ? formatPrice(station.price) : '--'}</p>
             {station.fillCost !== null && (
-              <p className="text-text-secondary text-xs">${station.fillCost.toFixed(2)}</p>
+              <p className="text-on-surface-variant text-xs">${station.fillCost.toFixed(2)}</p>
             )}
             {station.savings !== null && (
-              <p className={`text-xs font-medium ${station.savings >= 0 ? 'text-primary' : 'text-danger'}`}>
+              <p className={`text-xs font-medium ${station.savings >= 0 ? 'text-primary' : 'text-error'}`}>
                 {station.savings >= 0 ? '+' : ''}{station.savings.toFixed(2)}
               </p>
             )}

@@ -13,7 +13,7 @@ export default function MapPage() {
   const [brandFilter] = useState<string[]>([])
 
   return (
-    <div className="flex flex-col h-[calc(100vh-80px)]">
+    <div className="flex flex-col h-[calc(100vh-80px)] bg-surface">
       <MapFilters
         view={view}
         setView={setView}

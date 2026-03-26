@@ -24,7 +24,7 @@ export default function AchievementGrid() {
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <p className="text-text-secondary text-sm">
+      <p className="text-on-surface-variant text-sm">
         {unlockedKeys.size} / {ACHIEVEMENTS.length} unlocked
       </p>
 
@@ -32,7 +32,7 @@ export default function AchievementGrid() {
         const achievements = ACHIEVEMENTS.filter(a => a.category === cat.key)
         return (
           <div key={cat.key}>
-            <h3 className="font-heading font-bold text-sm text-text-secondary mb-2">{cat.label}</h3>
+            <h3 className="font-headline font-bold text-xs text-on-surface-variant mb-2 uppercase tracking-widest">{cat.label}</h3>
             <div className="grid grid-cols-4 gap-3">
               {achievements.map(a => (
                 <Badge
@@ -56,21 +56,21 @@ export default function AchievementGrid() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-8"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-8"
             onClick={() => setSelectedKey(null)}
           >
             <motion.div
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
-              className="glass-card p-6 max-w-[320px] w-full text-center"
+              className="puffy-card p-6 max-w-[320px] w-full text-center"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="text-5xl mb-3">{selected.icon}</div>
-              <h3 className="font-heading text-xl font-bold mb-1">{selected.name}</h3>
-              <p className="text-text-secondary text-sm mb-3">{selected.description}</p>
-              <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                isUnlocked ? 'bg-primary/20 text-primary' : 'bg-surface text-text-secondary'
+              <h3 className="font-headline text-xl font-bold text-on-surface mb-1">{selected.name}</h3>
+              <p className="text-on-surface-variant text-sm mb-3">{selected.description}</p>
+              <div className={`inline-block px-3 py-1 rounded-full text-xs font-headline font-bold uppercase tracking-widest ${
+                isUnlocked ? 'bg-secondary-container text-on-surface' : 'bg-surface-container-low text-on-surface-variant'
               }`}>
                 {isUnlocked ? 'Unlocked!' : 'Locked'}
               </div>

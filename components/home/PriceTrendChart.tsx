@@ -28,14 +28,14 @@ export default function PriceTrendChart() {
   const todayPrice = data[data.length - 1]?.price || 0
 
   return (
-    <div className="glass-card p-4">
-      <div className="flex items-center justify-between mb-3">
+    <div className="puffy-card p-5">
+      <div className="flex items-center justify-between mb-4">
         <div>
-          <p className="text-text-secondary text-xs">30-Day Price Trend</p>
-          <p className="font-heading font-bold text-lg">{car?.fuelType || 'Diesel'} in Brisbane</p>
+          <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">30-Day Price Trend</span>
+          <p className="font-headline font-bold text-lg mt-0.5">{car?.fuelType || 'Diesel'} in Brisbane</p>
         </div>
         <div className="text-right">
-          <p className="text-text-secondary text-xs">Today</p>
+          <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Today</span>
           <p className="price-ticker text-lg text-primary">{todayPrice.toFixed(1)}</p>
         </div>
       </div>
@@ -45,20 +45,20 @@ export default function PriceTrendChart() {
           <AreaChart data={data}>
             <defs>
               <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#00FF6A" stopOpacity={0.3} />
-                <stop offset="100%" stopColor="#00FF6A" stopOpacity={0} />
+                <stop offset="0%" stopColor="#ff7a2f" stopOpacity={0.2} />
+                <stop offset="100%" stopColor="#ff7a2f" stopOpacity={0} />
               </linearGradient>
             </defs>
             <XAxis
               dataKey="date"
               tickFormatter={(d) => new Date(d).getDate().toString()}
-              tick={{ fill: '#8B8B8B', fontSize: 10 }}
+              tick={{ fill: '#5c5b5b', fontSize: 10 }}
               axisLine={false}
               tickLine={false}
               interval={4}
             />
             <YAxis
-              tick={{ fill: '#8B8B8B', fontSize: 10 }}
+              tick={{ fill: '#5c5b5b', fontSize: 10 }}
               axisLine={false}
               tickLine={false}
               domain={['dataMin - 5', 'dataMax + 5']}
@@ -67,10 +67,11 @@ export default function PriceTrendChart() {
             />
             <Tooltip
               contentStyle={{
-                background: '#141416',
-                border: '1px solid #1F1F23',
-                borderRadius: '8px',
-                color: '#FAFAFA',
+                background: '#ffffff',
+                borderRadius: '1rem',
+                boxShadow: '0 10px 30px rgba(47,47,46,0.1)',
+                border: 'none',
+                color: '#2f2f2e',
                 fontSize: '12px',
               }}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -80,13 +81,13 @@ export default function PriceTrendChart() {
             <Area
               type="monotone"
               dataKey="price"
-              stroke="#00FF6A"
+              stroke="#9c3f00"
               strokeWidth={2}
               fill="url(#priceGradient)"
             />
             <ReferenceLine
               x={data[data.length - 1]?.date}
-              stroke="#00FF6A"
+              stroke="#9c3f00"
               strokeDasharray="3 3"
               strokeOpacity={0.5}
             />

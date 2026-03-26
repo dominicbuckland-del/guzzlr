@@ -14,35 +14,35 @@ export default function DriverBenchmark() {
   const percentile = 62
 
   return (
-    <div className="glass-card p-4">
-      <h3 className="font-heading font-bold text-sm text-text-secondary mb-3">
+    <div className="puffy-card p-4">
+      <h3 className="font-headline font-bold text-xs text-on-surface-variant mb-3 uppercase tracking-widest">
         Driver Benchmarks
       </h3>
       <div className="space-y-3">
         <div>
           <div className="flex justify-between text-sm mb-1">
-            <span className="text-text-secondary">Avg {car.model} driver in SEQ</span>
-            <span>${avgSpend}/week</span>
+            <span className="text-on-surface-variant">Avg {car.model} driver in SEQ</span>
+            <span className="text-on-surface">${avgSpend}/week</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-text-secondary">You spend</span>
-            <span className="text-primary font-heading font-bold">${userSpend}/week</span>
+            <span className="text-on-surface-variant">You spend</span>
+            <span className="text-primary font-headline font-bold">${userSpend}/week</span>
           </div>
         </div>
-        <hr className="border-surface-border" />
+        <hr className="border-outline-variant/20" />
         <div>
           <div className="flex justify-between text-sm mb-1">
-            <span className="text-text-secondary">Avg {car.model} economy</span>
-            <span>{avgEconomy.toFixed(1)}L/100km</span>
+            <span className="text-on-surface-variant">Avg {car.model} economy</span>
+            <span className="text-on-surface">{avgEconomy.toFixed(1)}L/100km</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-text-secondary">Your economy</span>
-            <span className="text-primary font-heading font-bold">{userEconomy.toFixed(1)}L/100km</span>
+            <span className="text-on-surface-variant">Your economy</span>
+            <span className="text-primary font-headline font-bold">{userEconomy.toFixed(1)}L/100km</span>
           </div>
         </div>
-        <hr className="border-surface-border" />
-        <div className="bg-primary/10 rounded-lg p-3 text-center">
-          <p className="text-primary font-heading font-bold">
+        <hr className="border-outline-variant/20" />
+        <div className="bg-[#fff0ea] rounded-2xl p-3 text-center">
+          <p className="text-primary font-headline font-bold">
             More fuel-efficient than {percentile}% of {car.model} drivers
           </p>
         </div>

@@ -35,20 +35,20 @@ export default function BrandReportCard() {
 
   return (
     <div className="space-y-3 animate-fade-in">
-      <p className="text-text-secondary text-sm">Average markup by brand vs area average (E10)</p>
+      <p className="text-on-surface-variant text-sm">Average markup by brand vs area average (E10)</p>
       {brands.map((b) => (
-        <div key={b.brand} className="glass-card p-3 flex items-center justify-between">
+        <div key={b.brand} className="puffy-card p-3 flex items-center justify-between">
           <div>
-            <p className="font-medium text-sm">{b.brand}</p>
-            <p className="text-text-secondary text-xs">{b.count} stations</p>
+            <p className="font-medium text-sm text-on-surface">{b.brand}</p>
+            <p className="text-on-surface-variant text-xs">{b.count} stations</p>
           </div>
           <div className="text-right">
-            <p className={`font-heading font-bold text-sm ${
-              b.markup < 0 ? 'text-primary' : b.markup > 2 ? 'text-danger' : 'text-warning'
+            <p className={`font-headline font-bold text-sm ${
+              b.markup < 0 ? 'text-primary' : b.markup > 2 ? 'text-error' : 'text-[#d97706]'
             }`}>
               {b.markup > 0 ? '+' : ''}{b.markup.toFixed(1)}c/L
             </p>
-            <p className="text-text-secondary text-xs">
+            <p className="text-on-surface-variant text-xs">
               {b.markup < 0 ? 'below avg' : 'above avg'}
             </p>
           </div>

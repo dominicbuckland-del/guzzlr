@@ -36,11 +36,11 @@ export default function QuickStatCard({ type }: Props) {
 
         return (
           <>
-            <p className="text-text-secondary text-xs mb-1">Cheapest Nearby</p>
-            <p className="font-heading font-bold text-lg text-text-primary truncate">{cheapest.name}</p>
-            <p className="price-ticker text-2xl text-primary">{formatPrice(cheapest.price)}</p>
-            <p className="text-text-secondary text-xs mt-1">{cheapest.distance}km away</p>
-            {car && <p className="text-primary text-xs font-medium mt-1">Fill cost: ${fillCost.toFixed(2)}</p>}
+            <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Cheapest Nearby</span>
+            <p className="font-headline font-bold text-sm text-on-surface truncate mt-1">{cheapest.name}</p>
+            <p className="price-ticker text-2xl text-primary mt-1">{formatPrice(cheapest.price)}<span className="text-sm opacity-50 ml-1">c/L</span></p>
+            <p className="text-on-surface-variant text-xs mt-1">{cheapest.distance}km away</p>
+            {car && <p className="text-primary text-xs font-bold mt-1">Fill: ${fillCost.toFixed(2)}</p>}
           </>
         )
       }
@@ -59,9 +59,9 @@ export default function QuickStatCard({ type }: Props) {
 
         return (
           <>
-            <p className="text-text-secondary text-xs mb-1">Weekly Spend</p>
-            <AnimatedNumber value={thisWeek} prefix="$" className="price-ticker text-2xl text-text-primary" />
-            <p className={`text-xs font-medium mt-1 ${change > 0 ? 'text-danger' : 'text-primary'}`}>
+            <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Weekly Spend</span>
+            <AnimatedNumber value={thisWeek} prefix="$" className="price-ticker text-2xl text-on-surface block mt-1" />
+            <p className={`text-xs font-bold mt-1 ${change > 0 ? 'text-error' : 'text-primary'}`}>
               {change > 0 ? '↑' : '↓'}${Math.abs(change).toFixed(2)} vs last week
             </p>
           </>
@@ -79,22 +79,20 @@ export default function QuickStatCard({ type }: Props) {
 
         return (
           <>
-            <p className="text-text-secondary text-xs mb-1">Saved This Month</p>
-            <AnimatedNumber value={monthlySaved} prefix="$" className="price-ticker text-2xl text-primary" />
-            <p className="text-text-secondary text-xs mt-1">vs area average</p>
+            <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Saved This Month</span>
+            <AnimatedNumber value={monthlySaved} prefix="$" className="price-ticker text-2xl text-primary block mt-1" />
+            <p className="text-on-surface-variant text-xs mt-1">vs area average</p>
           </>
         )
       }
 
       case 'economy': {
         const rated = car?.ratedEconomyL100km || 0
-
         return (
           <>
-            <p className="text-text-secondary text-xs mb-1">Your Economy</p>
-            <p className="price-ticker text-2xl text-text-primary">{rated}</p>
-            <p className="text-text-secondary text-xs">L/100km (rated)</p>
-            <p className="text-xs text-text-secondary mt-1">Log odometer for real data</p>
+            <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Your Economy</span>
+            <p className="price-ticker text-2xl text-on-surface mt-1">{rated}<span className="text-sm opacity-50 ml-1">L/100km</span></p>
+            <p className="text-xs text-on-surface-variant mt-1">Rated economy</p>
           </>
         )
       }
@@ -102,12 +100,12 @@ export default function QuickStatCard({ type }: Props) {
       case 'streak': {
         return (
           <>
-            <p className="text-text-secondary text-xs mb-1">Streak</p>
-            <div className="flex items-baseline gap-1">
-              <span className="text-2xl">🔥</span>
-              <AnimatedNumber value={user.streakCount} decimals={0} className="price-ticker text-2xl text-text-primary" />
+            <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Streak</span>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>local_fire_department</span>
+              <AnimatedNumber value={user.streakCount} decimals={0} className="price-ticker text-2xl text-on-surface" />
             </div>
-            <p className="text-text-secondary text-xs mt-1">fills beating average</p>
+            <p className="text-on-surface-variant text-xs mt-1">fills beating avg</p>
           </>
         )
       }
@@ -115,7 +113,7 @@ export default function QuickStatCard({ type }: Props) {
   }
 
   return (
-    <div className="glass-card p-4 min-w-[160px] flex-shrink-0">
+    <div className="puffy-card p-4 min-w-[170px] flex-shrink-0">
       {renderContent()}
     </div>
   )

@@ -10,11 +10,10 @@ import FuelFeed from '@/components/home/FuelFeed'
 import { SkeletonSignal, SkeletonCard } from '@/components/shared/Skeleton'
 
 export default function HomePage() {
-  const { car, user, fillups, setFillups, setAchievements, setFeedItems } = useGuzzlrStore()
+  const { user, fillups, setFillups, setAchievements, setFeedItems } = useGuzzlrStore()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Initialize demo data
     if (fillups.length === 0) {
       setFillups(DEMO_FILLUPS)
       setAchievements(DEMO_ACHIEVEMENTS)
@@ -22,12 +21,12 @@ export default function HomePage() {
     }
     const timer = setTimeout(() => setLoading(false), 600)
     return () => clearTimeout(timer)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (loading) {
     return (
-      <div className="px-4 pt-6 space-y-4">
+      <div className="px-6 pt-6 space-y-4">
         <SkeletonSignal />
         <div className="flex gap-3 overflow-x-auto no-scrollbar">
           <SkeletonCard />
@@ -40,27 +39,40 @@ export default function HomePage() {
   }
 
   return (
-    <div className="px-4 pt-6 space-y-4 animate-fade-in">
+    <div className="px-6 pt-6 space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between mb-2">
+      <header className="flex justify-between items-center">
         <div>
-          <p className="text-text-secondary text-sm">
-            {car ? `${car.year} ${car.make} ${car.model}` : 'Set up your car'}
-          </p>
-          <h1 className="font-heading text-2xl font-bold">Dashboard</h1>
+          <h1 className="font-headline text-3xl font-extrabold tracking-tight text-on-surface">
+            G&apos;day, Mate!<br />
+            <span className="text-primary">Ready to refuel?</span>
+          </h1>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="bg-surface border border-surface-border rounded-full px-3 py-1">
-            <span className="text-primary font-heading font-bold text-sm">Lv.{user.level}</span>
+        <div className="flex items-center gap-3">
+          <div className="bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-full font-headline font-bold text-sm flex items-center gap-1.5 shadow-sm">
+            <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>stars</span>
+            {user.xp.toLocaleString()} pts
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Signal Card */}
       <SignalCard />
 
+      {/* Quick Actions */}
+      <div className="flex gap-4">
+        <a href="/log" className="flex-1 bg-primary text-on-primary rounded-[1rem] p-5 flex flex-col items-center gap-2 shadow-lg tap-active">
+          <span className="material-symbols-outlined text-3xl">bolt</span>
+          <span className="font-headline font-bold text-sm">Log Fill-Up</span>
+        </a>
+        <a href="/map" className="flex-1 bg-surface-container-low text-on-surface rounded-[1rem] p-5 flex flex-col items-center gap-2 shadow-sm tap-active">
+          <span className="material-symbols-outlined text-3xl text-primary">distance</span>
+          <span className="font-headline font-bold text-sm">Find Fuel</span>
+        </a>
+      </div>
+
       {/* Quick Stats Carousel */}
-      <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1 -mx-4 px-4">
+      <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1 -mx-6 px-6">
         <QuickStatCard type="cheapest" />
         <QuickStatCard type="weekly" />
         <QuickStatCard type="saved" />

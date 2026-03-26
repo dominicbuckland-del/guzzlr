@@ -9,7 +9,7 @@ interface CardProps {
 export default function Card({ children, className = '', onClick }: CardProps) {
   return (
     <div
-      className={`glass-card p-4 ${onClick ? 'tap-active cursor-pointer' : ''} ${className}`}
+      className={`puffy-card p-4 ${onClick ? 'tap-active cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
       {children}

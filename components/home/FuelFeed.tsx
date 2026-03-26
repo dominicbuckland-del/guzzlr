@@ -18,15 +18,15 @@ export default function FuelFeed() {
   if (feedItems.length === 0) return null
 
   return (
-    <div className="glass-card p-4">
-      <h3 className="font-heading font-bold text-sm text-text-secondary mb-3">Activity</h3>
-      <div className="space-y-3">
+    <div className="puffy-card p-5">
+      <h3 className="font-headline font-bold text-xs text-on-surface-variant uppercase tracking-widest mb-4">Activity</h3>
+      <div className="space-y-4">
         {feedItems.slice(0, 8).map((item) => (
           <div key={item.id} className="flex items-start gap-3">
             <span className="text-lg flex-shrink-0 mt-0.5">{item.icon}</span>
             <div className="flex-1 min-w-0">
-              <p className="text-sm text-text-primary leading-snug">{item.message}</p>
-              <p className="text-xs text-text-secondary mt-0.5">{timeAgo(item.timestamp)}</p>
+              <p className="text-sm text-on-surface leading-snug font-medium">{item.message}</p>
+              <p className="text-xs text-on-surface-variant mt-0.5">{timeAgo(item.timestamp)}</p>
             </div>
           </div>
         ))}

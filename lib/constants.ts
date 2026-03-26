@@ -68,10 +68,10 @@ export const BRAND_COLORS: Record<string, string> = {
 
 // Signal colors
 export const SIGNAL_COLORS = {
-  fill_now: '#00FF6A',
-  hold: '#FFB800',
-  wait: '#FF3B3B',
-  fill_soon: '#FF3B3B',
+  fill_now: '#16a34a',
+  hold: '#d97706',
+  wait: '#dc2626',
+  fill_soon: '#dc2626',
 };
 
 export const SIGNAL_LABELS: Record<string, string> = {

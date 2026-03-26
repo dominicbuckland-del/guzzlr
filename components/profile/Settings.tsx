@@ -44,52 +44,52 @@ export default function Settings() {
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <div className="glass-card p-4 space-y-4">
-        <h3 className="font-heading font-bold text-sm text-text-secondary">Settings</h3>
+      <div className="puffy-card p-4 space-y-4">
+        <h3 className="font-headline font-bold text-xs text-on-surface-variant uppercase tracking-widest">Settings</h3>
 
         <div>
-          <label className="text-text-secondary text-xs mb-1 block">Display Name</label>
+          <label className="text-on-surface-variant text-xs mb-1 block uppercase tracking-widest font-headline">Display Name</label>
           <input
             type="text"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-            className="w-full bg-surface border border-surface-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-primary/50"
+            className="w-full bg-surface-container-low rounded-2xl px-4 py-3 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
           />
         </div>
 
         <div>
-          <label className="text-text-secondary text-xs mb-1 block">Home Postcode</label>
+          <label className="text-on-surface-variant text-xs mb-1 block uppercase tracking-widest font-headline">Home Postcode</label>
           <input
             type="text"
             value={homePostcode}
             onChange={(e) => setHomePostcode(e.target.value)}
-            className="w-full bg-surface border border-surface-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-primary/50"
+            className="w-full bg-surface-container-low rounded-2xl px-4 py-3 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
           />
         </div>
 
         <div>
-          <label className="text-text-secondary text-xs mb-1 block">Work Postcode</label>
+          <label className="text-on-surface-variant text-xs mb-1 block uppercase tracking-widest font-headline">Work Postcode</label>
           <input
             type="text"
             value={workPostcode}
             onChange={(e) => setWorkPostcode(e.target.value)}
-            className="w-full bg-surface border border-surface-border rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-primary/50"
+            className="w-full bg-surface-container-low rounded-2xl px-4 py-3 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
           />
         </div>
 
         <div>
-          <label className="text-text-secondary text-xs mb-2 block">
-            Search Radius: <span className="text-primary font-heading font-bold">{radius}km</span>
+          <label className="text-on-surface-variant text-xs mb-2 block uppercase tracking-widest font-headline">
+            Search Radius: <span className="text-primary font-headline font-bold">{radius}km</span>
           </label>
           <div className="flex gap-2">
             {RADIUS_OPTIONS.map((r) => (
               <button
                 key={r}
                 onClick={() => setRadius(r)}
-                className={`flex-1 py-2 rounded-xl font-heading font-bold text-sm transition-all tap-active ${
+                className={`flex-1 py-2 rounded-2xl font-headline font-bold text-sm transition-all tap-active active:scale-[0.98] ${
                   radius === r
-                    ? 'bg-primary text-background'
-                    : 'bg-surface border border-surface-border text-text-secondary'
+                    ? 'bg-primary text-white'
+                    : 'bg-surface-container-low text-on-surface-variant'
                 }`}
               >
                 {r}km
@@ -100,24 +100,24 @@ export default function Settings() {
 
         <button
           onClick={handleSave}
-          className={`w-full py-3 rounded-xl font-heading font-bold transition-all tap-active ${
-            saved ? 'bg-primary/20 text-primary' : 'bg-primary text-background'
+          className={`w-full py-3 rounded-2xl font-headline font-bold transition-all tap-active active:scale-[0.98] ${
+            saved ? 'bg-[#fff0ea] text-primary' : 'btn-primary'
           }`}
         >
           {saved ? 'Saved!' : 'Save Settings'}
         </button>
       </div>
 
-      <div className="glass-card p-4 space-y-3">
+      <div className="puffy-card p-4 space-y-3">
         <button
           onClick={() => router.push('/onboarding')}
-          className="w-full bg-surface border border-surface-border rounded-xl py-3 text-sm font-medium text-text-secondary tap-active"
+          className="w-full bg-surface-container-low rounded-2xl py-3 text-sm font-headline font-bold text-on-surface-variant tap-active transition-all active:scale-[0.98]"
         >
           Change Car
         </button>
         <button
           onClick={handleExportCSV}
-          className="w-full bg-surface border border-surface-border rounded-xl py-3 text-sm font-medium text-text-secondary tap-active"
+          className="w-full bg-surface-container-low rounded-2xl py-3 text-sm font-headline font-bold text-on-surface-variant tap-active transition-all active:scale-[0.98]"
         >
           Export Fill-Up History (CSV)
         </button>

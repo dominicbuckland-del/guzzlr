@@ -14,9 +14,9 @@ export default function WelcomeScreen({ onNext }: Props) {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.5 }}
       >
-        <h1 className="font-heading text-5xl font-bold text-primary mb-2 tracking-tight">
+        <h1 className="font-headline text-5xl font-bold text-primary mb-2 tracking-tight">
           Guzzlr
-          <span className="text-text-secondary text-lg align-super ml-1">TM</span>
+          <span className="text-on-surface-variant text-lg align-super ml-1">TM</span>
         </h1>
       </motion.div>
 
@@ -24,7 +24,7 @@ export default function WelcomeScreen({ onNext }: Props) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.5 }}
-        className="font-heading text-2xl font-bold text-text-primary mt-8 leading-tight"
+        className="font-headline text-2xl font-bold text-on-surface mt-8 leading-tight"
       >
         Stop getting ripped off
         <br />
@@ -35,7 +35,7 @@ export default function WelcomeScreen({ onNext }: Props) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
-        className="text-text-secondary mt-4 text-base leading-relaxed max-w-[300px]"
+        className="text-on-surface-variant mt-4 text-base leading-relaxed max-w-[300px] font-body"
       >
         Guzzlr tells you when to fill, where to fill, and exactly how much you&apos;re spending.
       </motion.p>
@@ -45,9 +45,9 @@ export default function WelcomeScreen({ onNext }: Props) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.5 }}
         onClick={onNext}
-        className="mt-12 bg-primary text-background font-heading font-bold text-lg px-8 py-4 rounded-2xl tap-active hover:bg-primary/90 transition-colors"
+        className="mt-12 btn-primary font-headline font-bold text-lg px-8 py-4 rounded-2xl tap-active transition-all active:scale-[0.98]"
       >
-        Get Started →
+        Get Started
       </motion.button>
     </div>
   )

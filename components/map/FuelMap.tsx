@@ -18,7 +18,7 @@ interface Props {
 function createMarkerIcon(color: string) {
   return L.divIcon({
     className: 'custom-marker',
-    html: `<div style="width:28px;height:28px;border-radius:50%;background:${color};border:3px solid ${color === '#00FF6A' ? 'rgba(0,255,106,0.3)' : color === '#FF3B3B' ? 'rgba(255,59,59,0.3)' : 'rgba(255,184,0,0.3)'};box-shadow:0 0 8px ${color}40;display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:#fff"></div></div>`,
+    html: `<div style="width:28px;height:28px;border-radius:50%;background:${color};border:3px solid ${color === '#ff7a2f' ? 'rgba(255,122,47,0.3)' : color === '#dc2626' ? 'rgba(220,38,38,0.3)' : 'rgba(253,212,0,0.3)'};box-shadow:0 0 8px ${color}40;display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:#fff"></div></div>`,
     iconSize: [28, 28],
     iconAnchor: [14, 14],
     popupAnchor: [0, -14],
@@ -41,7 +41,7 @@ function UserLocationMarker() {
     <Circle
       center={[userLat, userLng]}
       radius={80}
-      pathOptions={{ color: '#4A90D9', fillColor: '#4A90D9', fillOpacity: 0.8, weight: 2 }}
+      pathOptions={{ color: '#9c3f00', fillColor: '#ff7a2f', fillOpacity: 0.8, weight: 2 }}
     />
   )
 }
@@ -82,9 +82,9 @@ export default function FuelMap({ fuelType: fuelTypeOverride, brandFilter }: Pro
 
   function getMarkerColor(price: number | null): string {
     if (!price) return '#8B8B8B'
-    if (price <= cheapThreshold) return '#00FF6A'
-    if (price >= expensiveThreshold) return '#FF3B3B'
-    return '#FFB800'
+    if (price <= cheapThreshold) return '#ff7a2f'
+    if (price >= expensiveThreshold) return '#dc2626'
+    return '#fdd400'
   }
 
   const selected = selectedStation ? stations.find(s => s.id === selectedStation) : null
@@ -98,7 +98,7 @@ export default function FuelMap({ fuelType: fuelTypeOverride, brandFilter }: Pro
         zoomControl={false}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>'
         />
         <UserLocationMarker />
@@ -112,12 +112,12 @@ export default function FuelMap({ fuelType: fuelTypeOverride, brandFilter }: Pro
             }}
           >
             <Popup>
-              <div style={{ color: '#FAFAFA', background: '#141416', padding: '4px', minWidth: '120px' }}>
+              <div style={{ color: '#2f2f2e', background: '#ffffff', padding: '4px', minWidth: '120px', borderRadius: '8px' }}>
                 <strong>{station.name}</strong><br />
-                <span style={{ fontFamily: 'Space Grotesk', fontSize: '18px', color: '#00FF6A' }}>
+                <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: '18px', color: '#9c3f00', fontWeight: 700 }}>
                   {station.price ? formatPrice(station.price) : 'N/A'}
                 </span>
-                <span style={{ color: '#8B8B8B', fontSize: '11px' }}> c/L</span>
+                <span style={{ color: '#5c5b5b', fontSize: '11px' }}> c/L</span>
               </div>
             </Popup>
           </Marker>
