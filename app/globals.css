@@ -120,10 +120,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #f3f0ef 25%, #eae7e7 50%, #f3f0ef 75%);
+  background: linear-gradient(90deg, #eae7e7 25%, #dfdcdc 50%, #eae7e7 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
 }
 
 /* Leaflet overrides for warm map */
