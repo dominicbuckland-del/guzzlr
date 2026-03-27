@@ -8,9 +8,10 @@ import QuickStatCard from '@/components/home/QuickStatCard'
 import PriceTrendChart from '@/components/home/PriceTrendChart'
 import FuelFeed from '@/components/home/FuelFeed'
 import { SkeletonSignal, SkeletonCard } from '@/components/shared/Skeleton'
+import Link from 'next/link'
 
 export default function HomePage() {
-  const { user, fillups, setFillups, setAchievements, setFeedItems } = useGuzzlrStore()
+  const { car, user, fillups, setFillups, setAchievements, setFeedItems } = useGuzzlrStore()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -26,64 +27,55 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <div className="px-6 pt-6 space-y-4">
+      <div className="px-4 pt-8 space-y-4">
         <SkeletonSignal />
-        <div className="flex gap-3 overflow-x-auto no-scrollbar">
-          <SkeletonCard />
-          <SkeletonCard />
-          <SkeletonCard />
-        </div>
+        <div className="flex gap-3 overflow-x-auto no-scrollbar"><SkeletonCard /><SkeletonCard /><SkeletonCard /></div>
         <SkeletonCard />
       </div>
     )
   }
 
   return (
-    <div className="px-6 pt-6 space-y-6 animate-fade-in">
+    <div className="px-4 pt-8 space-y-5 animate-fade-in">
       {/* Header */}
-      <header className="flex justify-between items-center">
+      <header className="flex items-center justify-between">
         <div>
-          <h1 className="font-headline text-3xl font-extrabold tracking-tight text-on-surface">
-            G&apos;day, Mate!<br />
-            <span className="text-primary">Ready to refuel?</span>
-          </h1>
+          <p className="text-text-secondary text-sm">{car ? `${car.year} ${car.make} ${car.model}` : 'Set up your car'}</p>
+          <h1 className="font-headline text-2xl font-extrabold tracking-tight">Dashboard</h1>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-full font-headline font-bold text-sm flex items-center gap-1.5 shadow-sm">
-            <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>stars</span>
-            {user.xp.toLocaleString()} pts
+        <div className="flex items-center gap-2">
+          <div className="bg-surface border border-surface-border rounded-full px-3 py-1 text-xs font-bold text-text-secondary">
+            {user.xp.toLocaleString()} XP
+          </div>
+          <div className="bg-white text-black rounded-full px-3 py-1 text-xs font-bold">
+            Lv.{user.level}
           </div>
         </div>
       </header>
 
-      {/* Signal Card */}
       <SignalCard />
 
       {/* Quick Actions */}
-      <div className="flex gap-4">
-        <a href="/log" className="flex-1 bg-primary text-on-primary rounded-[1rem] p-5 flex flex-col items-center gap-2 shadow-lg tap-active">
-          <span className="material-symbols-outlined text-3xl">bolt</span>
-          <span className="font-headline font-bold text-sm">Log Fill-Up</span>
-        </a>
-        <a href="/map" className="flex-1 bg-surface-container-low text-on-surface rounded-[1rem] p-5 flex flex-col items-center gap-2 shadow-sm tap-active">
-          <span className="material-symbols-outlined text-3xl text-primary">distance</span>
+      <div className="grid grid-cols-2 gap-3">
+        <Link href="/log" className="card p-4 flex items-center gap-3 tap-active">
+          <span className="text-2xl">+</span>
+          <span className="font-headline font-bold text-sm">Log Fill</span>
+        </Link>
+        <Link href="/map" className="card p-4 flex items-center gap-3 tap-active">
+          <span className="text-2xl">&#9678;</span>
           <span className="font-headline font-bold text-sm">Find Fuel</span>
-        </a>
+        </Link>
       </div>
 
-      {/* Quick Stats Carousel */}
-      <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1 -mx-6 px-6">
+      {/* Stats carousel */}
+      <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1 -mx-4 px-4">
         <QuickStatCard type="cheapest" />
         <QuickStatCard type="weekly" />
         <QuickStatCard type="saved" />
-        <QuickStatCard type="economy" />
         <QuickStatCard type="streak" />
       </div>
 
-      {/* Price Trend Chart */}
       <PriceTrendChart />
-
-      {/* Fuel Feed */}
       <FuelFeed />
     </div>
   )

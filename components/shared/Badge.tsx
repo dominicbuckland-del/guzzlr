@@ -7,34 +7,18 @@ interface BadgeProps {
 }
 
 export default function Badge({ icon, name, unlocked, size = 'md', onClick }: BadgeProps) {
-  const sizes = {
-    sm: 'w-14 h-14 text-xl',
-    md: 'w-20 h-20 text-2xl',
-    lg: 'w-24 h-24 text-3xl',
-  }
+  const sizes = { sm: 'w-12 h-12 text-xl', md: 'w-16 h-16 text-2xl', lg: 'w-20 h-20 text-3xl' }
 
   return (
-    <div
-      className={`flex flex-col items-center gap-2 tap-active ${onClick ? 'cursor-pointer' : ''}`}
-      onClick={onClick}
-    >
-      <div
-        className={`${sizes[size]} rounded-full flex items-center justify-center transition-all ${
-          unlocked
-            ? 'bg-secondary-container shadow-sm'
-            : 'bg-surface-container-high opacity-60 grayscale border-2 border-dashed border-outline-variant'
-        }`}
-      >
+    <div className={`flex flex-col items-center gap-1 ${onClick ? 'tap-active cursor-pointer' : ''}`} onClick={onClick}>
+      <div className={`${sizes[size]} rounded-full flex items-center justify-center ${
+        unlocked ? 'bg-surface-high border border-white/20' : 'bg-surface-high border border-surface-border opacity-30 grayscale'
+      }`}>
         {icon}
       </div>
-      <span className={`text-[10px] font-headline font-bold text-center leading-tight uppercase ${
-        unlocked ? 'text-on-surface' : 'text-on-surface-variant'
-      }`}>
+      <span className={`text-[10px] font-medium text-center leading-tight ${unlocked ? 'text-white' : 'text-text-muted'}`}>
         {name}
       </span>
-      {unlocked && (
-        <span className="text-[9px] font-bold text-primary uppercase">Unlocked</span>
-      )}
     </div>
   )
 }

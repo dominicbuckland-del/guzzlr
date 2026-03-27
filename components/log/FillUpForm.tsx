@@ -137,19 +137,19 @@ export default function FillUpForm() {
   return (
     <div className="space-y-4">
       {/* Step 1: Station */}
-      <div className="puffy-card p-4">
-        <h3 className="font-headline font-bold text-xs text-on-surface-variant mb-3 uppercase tracking-widest">Station</h3>
+      <div className="card p-4">
+        <h3 className="font-headline font-bold text-xs text-text-muted mb-3 uppercase tracking-widest">Station</h3>
         {nearestStations.length > 0 && !stationId && (
-          <div className="mb-3 p-3 bg-surface-container-low rounded-2xl">
-            <p className="text-xs text-on-surface-variant mb-2 uppercase tracking-widest font-headline font-bold">Nearest to you</p>
+          <div className="mb-3 p-3 bg-surface-high rounded-lg">
+            <p className="text-xs text-text-muted mb-2 uppercase tracking-widest font-headline font-bold">Nearest to you</p>
             {nearestStations.slice(0, 3).map(s => (
               <button
                 key={s.id}
                 onClick={() => { setStationId(s.id); setStationName(s.name) }}
-                className="w-full text-left py-2 px-2 rounded-xl hover:bg-[#fff0ea] transition-all tap-active flex items-center justify-between active:scale-[0.98]"
+                className="w-full text-left py-2 px-2 rounded-lg hover:bg-surface-high transition-all tap-active flex items-center justify-between active:scale-[0.98]"
               >
-                <span className="text-sm font-medium text-on-surface">{s.name}</span>
-                <span className="text-xs text-on-surface-variant">{s.dist}km</span>
+                <span className="text-sm font-medium text-white">{s.name}</span>
+                <span className="text-xs text-text-muted">{s.dist}km</span>
               </button>
             ))}
           </div>
@@ -157,10 +157,10 @@ export default function FillUpForm() {
         {stationId ? (
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium text-on-surface">{stationName}</p>
-              <p className="text-xs text-primary">Selected</p>
+              <p className="font-medium text-white">{stationName}</p>
+              <p className="text-xs text-text-secondary">Selected</p>
             </div>
-            <button onClick={() => { setStationId(''); setStationName(''); setPriceCpl('') }} className="text-on-surface-variant text-sm tap-active">Change</button>
+            <button onClick={() => { setStationId(''); setStationName(''); setPriceCpl('') }} className="text-text-muted text-sm tap-active">Change</button>
           </div>
         ) : (
           <select
@@ -169,7 +169,7 @@ export default function FillUpForm() {
               const s = STATIONS.find(st => st.id === e.target.value)
               if (s) { setStationId(s.id); setStationName(s.name) }
             }}
-            className="w-full bg-surface-container-low rounded-2xl px-4 py-3 text-on-surface appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+            className="w-full bg-surface-high rounded-lg px-4 py-3 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
           >
             <option value="">Search or select station...</option>
             {STATIONS.sort((a, b) => a.name.localeCompare(b.name)).map(s => (
@@ -180,76 +180,76 @@ export default function FillUpForm() {
       </div>
 
       {/* Step 2: Fill details */}
-      <div className="puffy-card p-4">
-        <h3 className="font-headline font-bold text-xs text-on-surface-variant mb-3 uppercase tracking-widest">Fill Details</h3>
+      <div className="card p-4">
+        <h3 className="font-headline font-bold text-xs text-text-muted mb-3 uppercase tracking-widest">Fill Details</h3>
         <div className="grid grid-cols-3 gap-3">
           <div>
-            <label className="text-on-surface-variant text-xs mb-1 block uppercase tracking-widest font-headline">Litres</label>
+            <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Litres</label>
             <input
               type="number"
               value={litres}
               onChange={(e) => { setLitres(e.target.value); if (priceCpl) setTotalDollars('') }}
               placeholder="65.0"
               step="0.1"
-              className="w-full bg-surface-container-low rounded-2xl px-3 py-3 text-on-surface text-center font-headline font-bold text-lg focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+              className="w-full bg-surface-high rounded-lg px-3 py-3 text-white text-center font-headline font-bold text-lg focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
             />
           </div>
           <div>
-            <label className="text-on-surface-variant text-xs mb-1 block uppercase tracking-widest font-headline">Price (c/L)</label>
+            <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Price (c/L)</label>
             <input
               type="number"
               value={priceCpl}
               onChange={(e) => { setPriceCpl(e.target.value); if (litres) setTotalDollars('') }}
               placeholder="178.9"
               step="0.1"
-              className="w-full bg-surface-container-low rounded-2xl px-3 py-3 text-on-surface text-center font-headline font-bold text-lg focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+              className="w-full bg-surface-high rounded-lg px-3 py-3 text-white text-center font-headline font-bold text-lg focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
             />
           </div>
           <div>
-            <label className="text-on-surface-variant text-xs mb-1 block uppercase tracking-widest font-headline">Total ($)</label>
+            <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Total ($)</label>
             <input
               type="number"
               value={totalDollars}
               onChange={(e) => { setTotalDollars(e.target.value); if (litres) setPriceCpl('') }}
               placeholder="116.29"
               step="0.01"
-              className="w-full bg-surface-container-low rounded-2xl px-3 py-3 text-on-surface text-center font-headline font-bold text-lg focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+              className="w-full bg-surface-high rounded-lg px-3 py-3 text-white text-center font-headline font-bold text-lg focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
             />
           </div>
         </div>
       </div>
 
       {/* Step 3: Optional extras */}
-      <div className="puffy-card p-4">
-        <h3 className="font-headline font-bold text-xs text-on-surface-variant mb-3 uppercase tracking-widest">Optional</h3>
+      <div className="card p-4">
+        <h3 className="font-headline font-bold text-xs text-text-muted mb-3 uppercase tracking-widest">Optional</h3>
         <div className="space-y-3">
           <div>
-            <label className="text-on-surface-variant text-xs mb-1 block uppercase tracking-widest font-headline">Odometer (km)</label>
+            <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Odometer (km)</label>
             <input
               type="number"
               value={odometer}
               onChange={(e) => setOdometer(e.target.value)}
               placeholder="45,230"
-              className="w-full bg-surface-container-low rounded-2xl px-4 py-3 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+              className="w-full bg-surface-high rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
             />
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-on-surface">Full tank?</span>
+            <span className="text-sm text-white">Full tank?</span>
             <button
               onClick={() => setIsFullTank(!isFullTank)}
-              className={`w-12 h-7 rounded-full transition-all ${isFullTank ? 'bg-primary' : 'bg-outline-variant/30'}`}
+              className={`w-12 h-7 rounded-full transition-all ${isFullTank ? 'bg-white' : 'bg-surface-high'}`}
             >
-              <div className={`w-5 h-5 rounded-full bg-white transition-transform ${isFullTank ? 'translate-x-6' : 'translate-x-1'}`} />
+              <div className={`w-5 h-5 rounded-full transition-transform ${isFullTank ? 'bg-black translate-x-6' : 'bg-text-muted translate-x-1'}`} />
             </button>
           </div>
           <div>
-            <label className="text-on-surface-variant text-xs mb-1 block uppercase tracking-widest font-headline">Notes</label>
+            <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Notes</label>
             <input
               type="text"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Optional notes..."
-              className="w-full bg-surface-container-low rounded-2xl px-4 py-3 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+              className="w-full bg-surface-high rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
             />
           </div>
         </div>
@@ -259,7 +259,7 @@ export default function FillUpForm() {
       <button
         onClick={handleSubmit}
         disabled={!litres || !priceCpl}
-        className="w-full btn-primary font-headline font-bold text-lg py-4 rounded-2xl tap-active transition-all active:scale-[0.98] disabled:opacity-30"
+        className="w-full bg-white text-black font-headline font-bold text-base py-3.5 rounded-full tap-active disabled:opacity-30"
       >
         Log Fill-Up
       </button>

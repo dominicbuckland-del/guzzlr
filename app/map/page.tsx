@@ -5,7 +5,10 @@ import dynamic from 'next/dynamic'
 import MapFilters from '@/components/map/MapFilters'
 import StationList from '@/components/map/StationList'
 
-const FuelMap = dynamic(() => import('@/components/map/FuelMap'), { ssr: false })
+const FuelMap = dynamic(() => import('@/components/map/FuelMap'), {
+  ssr: false,
+  loading: () => <div className="flex-1 bg-bg flex items-center justify-center text-text-muted">Loading map...</div>,
+})
 
 export default function MapPage() {
   const [view, setView] = useState<'map' | 'list'>('map')
@@ -13,13 +16,8 @@ export default function MapPage() {
   const [brandFilter] = useState<string[]>([])
 
   return (
-    <div className="flex flex-col h-[calc(100vh-80px)] bg-surface">
-      <MapFilters
-        view={view}
-        setView={setView}
-        fuelType={fuelType}
-        setFuelType={setFuelType}
-      />
+    <div className="flex flex-col h-[calc(100dvh-80px)]">
+      <MapFilters view={view} setView={setView} fuelType={fuelType} setFuelType={setFuelType} />
       {view === 'map' ? (
         <FuelMap fuelType={fuelType} brandFilter={brandFilter} />
       ) : (

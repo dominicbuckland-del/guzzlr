@@ -1,17 +1,8 @@
 import { ReactNode } from 'react'
 
-interface CardProps {
-  children: ReactNode
-  className?: string
-  onClick?: () => void
-}
-
-export default function Card({ children, className = '', onClick }: CardProps) {
+export default function Card({ children, className = '', onClick }: { children: ReactNode; className?: string; onClick?: () => void }) {
   return (
-    <div
-      className={`puffy-card p-4 ${onClick ? 'tap-active cursor-pointer' : ''} ${className}`}
-      onClick={onClick}
-    >
+    <div className={`card p-4 ${onClick ? 'tap-active cursor-pointer' : ''} ${className}`} onClick={onClick}>
       {children}
     </div>
   )

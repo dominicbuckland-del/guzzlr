@@ -60,7 +60,7 @@ export default function GougingPage() {
 
   if (loading) {
     return (
-      <div className="px-4 pt-6 space-y-4 bg-surface min-h-screen">
+      <div className="px-4 pt-6 space-y-4 bg-bg min-h-screen">
         <SkeletonCard />
         <SkeletonCard />
         <SkeletonCard />
@@ -72,18 +72,18 @@ export default function GougingPage() {
   const weekStr = `Week of ${now.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })}`
 
   return (
-    <div className="px-4 pt-6 space-y-4 animate-fade-in bg-surface min-h-screen">
+    <div className="px-4 pt-6 space-y-4 animate-fade-in bg-bg min-h-screen">
       <div>
-        <h1 className="font-headline text-2xl font-bold text-on-surface">Gouging Report</h1>
-        <p className="text-on-surface-variant text-sm">{weekStr}</p>
+        <h1 className="font-headline text-2xl font-bold text-white">Gouging Report</h1>
+        <p className="text-text-secondary text-sm">{weekStr}</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex bg-surface-container-low rounded-xl p-0.5">
+      <div className="flex bg-surface-high rounded-xl p-0.5">
         <button
           onClick={() => setTab('gougers')}
           className={`flex-1 py-2 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-all ${
-            tab === 'gougers' ? 'bg-error text-white' : 'text-on-surface-variant'
+            tab === 'gougers' ? 'bg-white text-black' : 'text-text-muted'
           }`}
         >
           Biggest Rip-Offs
@@ -91,7 +91,7 @@ export default function GougingPage() {
         <button
           onClick={() => setTab('brands')}
           className={`flex-1 py-2 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-all ${
-            tab === 'brands' ? 'bg-error text-white' : 'text-on-surface-variant'
+            tab === 'brands' ? 'bg-white text-black' : 'text-text-muted'
           }`}
         >
           Brand Report Card
@@ -103,33 +103,33 @@ export default function GougingPage() {
           <p className="text-error font-headline font-bold text-sm uppercase tracking-widest">
             This Week&apos;s Biggest Rip-Offs
           </p>
-          <p className="text-on-surface-variant text-xs">
+          <p className="text-text-muted text-xs">
             Area average: {formatPrice(areaAverage)}c/L (E10)
           </p>
 
           {gougers.map((g, i) => (
-            <div key={g.station.id} className="puffy-card p-4">
+            <div key={g.station.id} className="card p-4">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className="font-headline font-bold text-error text-sm">#{i + 1}</span>
                   <div>
-                    <p className="font-headline font-bold text-sm text-on-surface">{g.station.name}</p>
-                    <p className="text-on-surface-variant text-xs">{g.station.suburb}</p>
+                    <p className="font-headline font-bold text-sm text-white">{g.station.name}</p>
+                    <p className="text-text-muted text-xs">{g.station.suburb}</p>
                   </div>
                 </div>
               </div>
 
               <div className="flex items-center justify-between mb-2">
-                <span className="text-on-surface-variant text-sm">E10: <span className="font-headline font-bold text-lg text-on-surface">{formatPrice(g.priceCents)}</span></span>
-                <span className="text-on-surface-variant text-xs">(avg: {formatPrice(g.areaAverageCents)})</span>
+                <span className="text-text-muted text-sm">E10: <span className="font-headline font-bold text-lg text-white">{formatPrice(g.priceCents)}</span></span>
+                <span className="text-text-muted text-xs">(avg: {formatPrice(g.areaAverageCents)})</span>
               </div>
 
-              <div className="bg-error/10 rounded-2xl p-2 mb-3">
+              <div className="bg-error/10 rounded-xl p-2 mb-3">
                 <p className="text-error font-headline font-bold text-sm">
                   {(g.aboveAverageCents / 10).toFixed(1)}c/L ABOVE AVERAGE
                 </p>
                 {car && (
-                  <p className="text-on-surface-variant text-xs mt-0.5">
+                  <p className="text-text-muted text-xs mt-0.5">
                     Overcharging you ${g.overchargeDollars.toFixed(2)}/tank
                   </p>
                 )}
@@ -137,7 +137,7 @@ export default function GougingPage() {
 
               <button
                 onClick={() => handleShare(g)}
-                className="w-full bg-surface-container-low rounded-2xl py-2 text-sm font-headline font-bold text-on-surface-variant tap-active flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+                className="w-full bg-surface-high border border-surface-border rounded-xl py-2 text-sm font-headline font-bold text-text-secondary tap-active flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
               >
                 <span className="material-symbols-outlined text-sm">share</span>
                 Share

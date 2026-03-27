@@ -4,182 +4,74 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
 
-:root {
-  --primary: #9c3f00;
-  --primary-container: #ff7a2f;
-  --secondary-container: #fdd400;
-  --surface: #f9f6f5;
-  --surface-low: #f3f0ef;
-  --surface-lowest: #ffffff;
-  --on-surface: #2f2f2e;
-  --on-surface-variant: #5c5b5b;
-  --outline-variant: #afadac;
-}
-
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
-html {
-  background-color: var(--surface);
-  color: var(--on-surface);
-}
-
-body {
+html, body {
+  background: #0a0a0a;
+  color: #ffffff;
   font-family: 'Be Vietnam Pro', sans-serif;
-  background-color: var(--surface);
-  color: var(--on-surface);
   min-height: 100vh;
   min-height: 100dvh;
   overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* Price ticker styling */
 .price-ticker {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
-/* Material Symbols */
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Core card */
+.card {
+  background: #111111;
+  border: 1px solid #222222;
+  border-radius: 12px;
 }
 
-.filled-icon {
-  font-variation-settings: 'FILL' 1;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #dfdcdc;
-  border-radius: 2px;
-}
-
-/* Hide scrollbar for horizontal carousels */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Puffy card - the core card pattern */
-.puffy-card {
-  background: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 20px 40px rgba(47, 47, 46, 0.06);
-}
-
-/* Glass card for floating nav / overlays */
-.glass-card {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 1rem;
-  box-shadow: 0 20px 40px rgba(47, 47, 46, 0.06);
-}
-
-/* Signal card glow effects */
+/* Signal states -- only color in the app */
 .signal-fill-now {
-  box-shadow: 0 20px 40px rgba(0, 180, 80, 0.12);
-  background: linear-gradient(135deg, #f0faf3 0%, #ffffff 100%);
+  border-color: #4ade8040;
 }
-
 .signal-wait, .signal-fill-soon {
-  box-shadow: 0 20px 40px rgba(176, 37, 0, 0.1);
-  background: linear-gradient(135deg, #fff0ea 0%, #ffffff 100%);
+  border-color: #ef444440;
 }
-
 .signal-hold {
-  box-shadow: 0 20px 40px rgba(253, 212, 0, 0.15);
-  background: linear-gradient(135deg, #fff8e0 0%, #ffffff 100%);
+  border-color: #88888840;
 }
 
-/* Skeleton loading */
+/* Skeleton */
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
-
 .skeleton {
-  background: linear-gradient(90deg, #eae7e7 25%, #dfdcdc 50%, #eae7e7 75%);
+  background: linear-gradient(90deg, #1a1a1a 25%, #222222 50%, #1a1a1a 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
-  border-radius: 0.75rem;
+  border-radius: 8px;
 }
 
-/* Leaflet overrides for warm map */
-.leaflet-container {
-  background: #f9f6f5 !important;
-}
+/* Leaflet dark */
+.leaflet-container { background: #0a0a0a !important; }
+.leaflet-control-zoom a { background: #111 !important; color: #fff !important; border-color: #222 !important; }
+.leaflet-control-attribution { background: rgba(10,10,10,0.8) !important; color: #555 !important; font-size: 10px !important; }
+.leaflet-control-attribution a { color: #555 !important; }
+.leaflet-popup-content-wrapper { background: #111 !important; color: #fff !important; border-radius: 8px !important; border: 1px solid #222 !important; }
+.leaflet-popup-tip { background: #111 !important; }
 
-.leaflet-control-zoom a {
-  background: #ffffff !important;
-  color: #2f2f2e !important;
-  border: none !important;
-  box-shadow: 0 4px 12px rgba(47, 47, 46, 0.1) !important;
-}
-
-.leaflet-control-attribution {
-  background: rgba(255, 255, 255, 0.8) !important;
-  color: #5c5b5b !important;
-  font-size: 10px !important;
-}
-
-.leaflet-control-attribution a {
-  color: #5c5b5b !important;
-}
-
-/* Bottom safe area for mobile */
-.pb-safe {
-  padding-bottom: max(env(safe-area-inset-bottom), 16px);
-}
-
-/* Bouncy tap interaction */
-.tap-active {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.tap-active:active {
-  transform: scale(0.95);
-}
-
-/* Gradient CTA button */
-.btn-primary {
-  background: linear-gradient(135deg, #9c3f00 0%, #ff7a2f 100%);
-  color: #fff0ea;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800;
-  border-radius: 9999px;
-  box-shadow: 0 15px 30px rgba(156, 63, 0, 0.3);
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.btn-primary:hover {
-  box-shadow: 0 20px 40px rgba(156, 63, 0, 0.4);
-}
-.btn-primary:active {
-  transform: scale(0.98);
-}
-
-/* Section background */
-.section-bg {
-  background: #f3f0ef;
-  border-radius: 1rem;
-}
+.pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 16px); }
+.tap-active:active { transform: scale(0.97); transition: transform 0.1s ease; }

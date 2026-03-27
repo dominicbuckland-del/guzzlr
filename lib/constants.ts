@@ -53,25 +53,25 @@ export const DEMO_USER_ID = 'demo-user-001';
 
 // Brand colors for station markers
 export const BRAND_COLORS: Record<string, string> = {
-  'BP': '#009900',
-  'Shell': '#FFD500',
-  'Coles Express': '#E01A22',
-  'Ampol': '#003DA5',
-  'United': '#0066CC',
-  'Puma': '#FF6600',
-  '7-Eleven': '#008C46',
-  'Liberty': '#0033A0',
-  'Costco': '#E31837',
-  'Metro': '#333333',
-  'Independent': '#666666',
+  'BP': '#888',
+  'Shell': '#aaa',
+  'Coles Express': '#666',
+  'Ampol': '#999',
+  'United': '#777',
+  'Puma': '#bbb',
+  '7-Eleven': '#888',
+  'Liberty': '#777',
+  'Costco': '#aaa',
+  'Metro': '#666',
+  'Independent': '#555',
 };
 
 // Signal colors
 export const SIGNAL_COLORS = {
-  fill_now: '#16a34a',
-  hold: '#d97706',
-  wait: '#dc2626',
-  fill_soon: '#dc2626',
+  fill_now: '#4ade80',
+  hold: '#888888',
+  wait: '#ef4444',
+  fill_soon: '#ef4444',
 };
 
 export const SIGNAL_LABELS: Record<string, string> = {
