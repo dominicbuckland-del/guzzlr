@@ -64,9 +64,10 @@ export default function OnboardingPage() {
         {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              i === step ? 'bg-white w-6' : i < step ? 'bg-white/50' : 'bg-surface-border'
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === step ? 'bg-text-primary w-6' : i < step ? 'bg-text-muted' : 'bg-surface-high'
             }`}
+            style={{ width: i === step ? '24px' : '8px' }}
           />
         ))}
       </div>

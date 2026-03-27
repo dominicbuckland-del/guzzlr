@@ -44,52 +44,55 @@ export default function Settings() {
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <div className="card p-4 space-y-4">
-        <h3 className="font-headline font-bold text-xs text-text-muted uppercase tracking-widest">Settings</h3>
+      <div className="card bg-surface rounded-[14px] p-4 space-y-0">
+        <h3 className="font-display font-bold text-[11px] text-text-muted uppercase tracking-widest mb-3">Settings</h3>
 
-        <div>
-          <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Display Name</label>
+        <div className="py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+          <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Display Name</label>
           <input
             type="text"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-            className="w-full bg-surface-high border border-surface-border rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
+            className="w-full bg-white rounded-[10px] px-4 py-3 text-text-primary text-[15px] focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all"
+            style={{ borderBottom: '0.5px solid #d1d1d6' }}
           />
         </div>
 
-        <div>
-          <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Home Postcode</label>
+        <div className="py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+          <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Home Postcode</label>
           <input
             type="text"
             value={homePostcode}
             onChange={(e) => setHomePostcode(e.target.value)}
-            className="w-full bg-surface-high border border-surface-border rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
+            className="w-full bg-white rounded-[10px] px-4 py-3 text-text-primary text-[15px] focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all"
+            style={{ borderBottom: '0.5px solid #d1d1d6' }}
           />
         </div>
 
-        <div>
-          <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Work Postcode</label>
+        <div className="py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+          <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Work Postcode</label>
           <input
             type="text"
             value={workPostcode}
             onChange={(e) => setWorkPostcode(e.target.value)}
-            className="w-full bg-surface-high border border-surface-border rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
+            className="w-full bg-white rounded-[10px] px-4 py-3 text-text-primary text-[15px] focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all"
+            style={{ borderBottom: '0.5px solid #d1d1d6' }}
           />
         </div>
 
-        <div>
-          <label className="text-text-muted text-xs mb-2 block uppercase tracking-widest font-headline">
-            Search Radius: <span className="text-white font-headline font-bold">{radius}km</span>
+        <div className="py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+          <label className="text-text-muted text-[11px] mb-2 block uppercase tracking-widest font-display">
+            Search Radius: <span className="text-text-primary font-display font-bold">{radius}km</span>
           </label>
           <div className="flex gap-2">
             {RADIUS_OPTIONS.map((r) => (
               <button
                 key={r}
                 onClick={() => setRadius(r)}
-                className={`flex-1 py-2 rounded-full font-headline font-bold text-sm transition-all tap-active active:scale-[0.98] ${
+                className={`flex-1 py-2 rounded-full font-display font-bold text-[13px] transition-all tap-active active:scale-[0.98] ${
                   radius === r
-                    ? 'bg-white text-black'
-                    : 'bg-surface-high border border-surface-border text-text-muted'
+                    ? 'bg-text-primary text-white'
+                    : 'bg-surface-high text-text-muted'
                 }`}
               >
                 {r}km
@@ -98,26 +101,29 @@ export default function Settings() {
           </div>
         </div>
 
-        <button
-          onClick={handleSave}
-          className={`w-full py-3 rounded-full font-headline font-bold transition-all tap-active active:scale-[0.98] ${
-            saved ? 'bg-surface-high text-success' : 'bg-white text-black'
-          }`}
-        >
-          {saved ? 'Saved!' : 'Save Settings'}
-        </button>
+        <div className="pt-4">
+          <button
+            onClick={handleSave}
+            className={`w-full py-3.5 rounded-[14px] font-display font-bold text-[15px] transition-all tap-active active:scale-[0.98] ${
+              saved ? 'bg-surface-high text-success' : 'bg-tint text-white'
+            }`}
+          >
+            {saved ? 'Saved!' : 'Save Settings'}
+          </button>
+        </div>
       </div>
 
-      <div className="card p-4 space-y-3">
+      <div className="card bg-surface rounded-[14px] p-4 space-y-0">
         <button
           onClick={() => router.push('/onboarding')}
-          className="w-full bg-surface-high border border-surface-border rounded-xl py-3 text-sm font-headline font-bold text-text-secondary tap-active transition-all active:scale-[0.98]"
+          className="w-full py-3 text-[15px] font-display font-bold text-text-secondary tap-active transition-all active:scale-[0.98] text-left"
+          style={{ borderBottom: '0.5px solid #d1d1d6' }}
         >
           Change Car
         </button>
         <button
           onClick={handleExportCSV}
-          className="w-full bg-surface-high border border-surface-border rounded-xl py-3 text-sm font-headline font-bold text-text-secondary tap-active transition-all active:scale-[0.98]"
+          className="w-full py-3 text-[15px] font-display font-bold text-text-secondary tap-active transition-all active:scale-[0.98] text-left"
         >
           Export Fill-Up History (CSV)
         </button>

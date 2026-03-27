@@ -74,24 +74,24 @@ export default function GougingPage() {
   return (
     <div className="px-4 pt-6 space-y-4 animate-fade-in bg-bg min-h-screen">
       <div>
-        <h1 className="font-headline text-2xl font-bold text-white">Gouging Report</h1>
-        <p className="text-text-secondary text-sm">{weekStr}</p>
+        <h1 className="font-display text-[22px] font-bold text-text-primary">Gouging Report</h1>
+        <p className="text-text-secondary text-[13px]">{weekStr}</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex bg-surface-high rounded-xl p-0.5">
+      <div className="flex bg-surface rounded-[10px] p-[3px]">
         <button
           onClick={() => setTab('gougers')}
-          className={`flex-1 py-2 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-all ${
-            tab === 'gougers' ? 'bg-white text-black' : 'text-text-muted'
+          className={`flex-1 py-2 rounded-[8px] text-[13px] font-display font-bold transition-all ${
+            tab === 'gougers' ? 'bg-text-primary text-white' : 'text-text-secondary'
           }`}
         >
           Biggest Rip-Offs
         </button>
         <button
           onClick={() => setTab('brands')}
-          className={`flex-1 py-2 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-all ${
-            tab === 'brands' ? 'bg-white text-black' : 'text-text-muted'
+          className={`flex-1 py-2 rounded-[8px] text-[13px] font-display font-bold transition-all ${
+            tab === 'brands' ? 'bg-text-primary text-white' : 'text-text-secondary'
           }`}
         >
           Brand Report Card
@@ -100,46 +100,46 @@ export default function GougingPage() {
 
       {tab === 'gougers' ? (
         <div className="space-y-3">
-          <p className="text-error font-headline font-bold text-sm uppercase tracking-widest">
+          <p className="text-error font-display font-bold text-[13px] uppercase tracking-widest">
             This Week&apos;s Biggest Rip-Offs
           </p>
-          <p className="text-text-muted text-xs">
+          <p className="text-text-muted text-[11px]">
             Area average: {formatPrice(areaAverage)}c/L (E10)
           </p>
 
           {gougers.map((g, i) => (
-            <div key={g.station.id} className="card p-4">
+            <div key={g.station.id} className="card bg-surface rounded-[14px] p-4">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="font-headline font-bold text-error text-sm">#{i + 1}</span>
+                  <span className="font-display font-bold text-error text-[13px]">#{i + 1}</span>
                   <div>
-                    <p className="font-headline font-bold text-sm text-white">{g.station.name}</p>
-                    <p className="text-text-muted text-xs">{g.station.suburb}</p>
+                    <p className="font-display font-bold text-[15px] text-text-primary">{g.station.name}</p>
+                    <p className="text-text-muted text-[11px]">{g.station.suburb}</p>
                   </div>
                 </div>
               </div>
 
               <div className="flex items-center justify-between mb-2">
-                <span className="text-text-muted text-sm">E10: <span className="font-headline font-bold text-lg text-white">{formatPrice(g.priceCents)}</span></span>
-                <span className="text-text-muted text-xs">(avg: {formatPrice(g.areaAverageCents)})</span>
+                <span className="text-text-secondary text-[13px]">E10: <span className="font-display font-bold text-[17px] text-text-primary">{formatPrice(g.priceCents)}</span></span>
+                <span className="text-text-muted text-[11px]">(avg: {formatPrice(g.areaAverageCents)})</span>
               </div>
 
-              <div className="bg-error/10 rounded-xl p-2 mb-3">
-                <p className="text-error font-headline font-bold text-sm">
+              <div className="bg-error/10 rounded-[12px] p-2.5 mb-3">
+                <p className="text-error font-display font-bold text-[13px]">
                   {(g.aboveAverageCents / 10).toFixed(1)}c/L ABOVE AVERAGE
                 </p>
                 {car && (
-                  <p className="text-text-muted text-xs mt-0.5">
-                    Overcharging you ${g.overchargeDollars.toFixed(2)}/tank
+                  <p className="text-text-muted text-[11px] mt-0.5">
+                    Overcharging you <span className="text-error font-bold">${g.overchargeDollars.toFixed(2)}</span>/tank
                   </p>
                 )}
               </div>
 
               <button
                 onClick={() => handleShare(g)}
-                className="w-full bg-surface-high border border-surface-border rounded-xl py-2 text-sm font-headline font-bold text-text-secondary tap-active flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+                className="w-full bg-surface-high rounded-[12px] py-2.5 text-[13px] font-display font-bold text-text-secondary tap-active flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
               >
-                <span className="material-symbols-outlined text-sm">share</span>
+                <span className="material-symbols-outlined text-[13px]">share</span>
                 Share
               </button>
             </div>

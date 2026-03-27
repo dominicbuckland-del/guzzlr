@@ -58,20 +58,21 @@ export default function CarSelector({ onNext, onBack }: Props) {
 
   return (
     <div className="flex flex-col min-h-[80vh] px-6 pt-12">
-      <button onClick={onBack} className="text-text-secondary text-sm mb-6 self-start tap-active font-headline">
+      <button onClick={onBack} className="text-tint text-[15px] mb-6 self-start tap-active font-display">
         Back
       </button>
 
-      <h2 className="font-headline text-3xl font-bold text-white mb-2">What do you drive?</h2>
-      <p className="text-text-secondary mb-8 font-body">We&apos;ll personalise everything to your car.</p>
+      <h2 className="font-display text-[28px] font-bold text-text-primary mb-2">What do you drive?</h2>
+      <p className="text-text-secondary text-[15px] mb-8">We&apos;ll personalise everything to your car.</p>
 
       <div className="space-y-4">
         <div>
-          <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Make</label>
+          <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Make</label>
           <select
             value={make}
             onChange={(e) => setMake(e.target.value)}
-            className="w-full bg-surface-high border border-surface-border rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
+            className="w-full bg-white rounded-[10px] px-4 py-3 text-text-primary text-[15px] appearance-none focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all"
+            style={{ borderBottom: '0.5px solid #d1d1d6' }}
           >
             <option value="">Select make...</option>
             {makes.map((m) => (
@@ -81,12 +82,13 @@ export default function CarSelector({ onNext, onBack }: Props) {
         </div>
 
         <div>
-          <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Model</label>
+          <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Model</label>
           <select
             value={model}
             onChange={(e) => setModel(e.target.value)}
             disabled={!make}
-            className="w-full bg-surface-high border border-surface-border rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-white/20 transition-all disabled:opacity-40"
+            className="w-full bg-white rounded-[10px] px-4 py-3 text-text-primary text-[15px] appearance-none focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all disabled:opacity-40"
+            style={{ borderBottom: '0.5px solid #d1d1d6' }}
           >
             <option value="">Select model...</option>
             {models.map((m) => (
@@ -96,12 +98,13 @@ export default function CarSelector({ onNext, onBack }: Props) {
         </div>
 
         <div>
-          <label className="text-text-muted text-xs mb-1 block uppercase tracking-widest font-headline">Year</label>
+          <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Year</label>
           <select
             value={year}
             onChange={(e) => setYear(Number(e.target.value))}
             disabled={!model}
-            className="w-full bg-surface-high border border-surface-border rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-white/20 transition-all disabled:opacity-40"
+            className="w-full bg-white rounded-[10px] px-4 py-3 text-text-primary text-[15px] appearance-none focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all disabled:opacity-40"
+            style={{ borderBottom: '0.5px solid #d1d1d6' }}
           >
             <option value="">Select year...</option>
             {years.map((y) => (
@@ -112,26 +115,26 @@ export default function CarSelector({ onNext, onBack }: Props) {
       </div>
 
       {specs && (
-        <div className="mt-6 card p-4 animate-fade-in">
+        <div className="mt-6 card bg-surface rounded-[14px] p-4 animate-fade-in">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-4xl">{vehicleIcons[specs.vehicleType] || '🚗'}</span>
             <div>
-              <p className="font-headline font-bold text-lg text-white">{year} {specs.make} {specs.model}</p>
-              <p className="text-text-secondary text-sm">{specs.vehicleType.charAt(0).toUpperCase() + specs.vehicleType.slice(1)}</p>
+              <p className="font-display font-bold text-[17px] text-text-primary">{year} {specs.make} {specs.model}</p>
+              <p className="text-text-secondary text-[13px]">{specs.vehicleType.charAt(0).toUpperCase() + specs.vehicleType.slice(1)}</p>
             </div>
           </div>
           <div className="grid grid-cols-3 gap-3 text-center">
-            <div className="bg-bg rounded-xl p-2">
-              <p className="text-white font-headline font-bold">{specs.tankSizeLitres}L</p>
-              <p className="text-text-muted text-xs uppercase tracking-widest font-headline">Tank</p>
+            <div className="bg-surface-high rounded-[12px] p-2">
+              <p className="text-text-primary font-display font-bold text-[15px]">{specs.tankSizeLitres}L</p>
+              <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">Tank</p>
             </div>
-            <div className="bg-bg rounded-xl p-2">
-              <p className="text-white font-headline font-bold">{specs.fuelType}</p>
-              <p className="text-text-muted text-xs uppercase tracking-widest font-headline">Fuel</p>
+            <div className="bg-surface-high rounded-[12px] p-2">
+              <p className="text-text-primary font-display font-bold text-[15px]">{specs.fuelType}</p>
+              <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">Fuel</p>
             </div>
-            <div className="bg-bg rounded-xl p-2">
-              <p className="text-white font-headline font-bold">{specs.ratedEconomyL100km}</p>
-              <p className="text-text-muted text-xs uppercase tracking-widest font-headline">L/100km</p>
+            <div className="bg-surface-high rounded-[12px] p-2">
+              <p className="text-text-primary font-display font-bold text-[15px]">{specs.ratedEconomyL100km}</p>
+              <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">L/100km</p>
             </div>
           </div>
         </div>
@@ -141,7 +144,7 @@ export default function CarSelector({ onNext, onBack }: Props) {
         <button
           onClick={handleNext}
           disabled={!specs}
-          className="w-full bg-white text-black font-headline font-bold text-lg py-4 rounded-full tap-active transition-all active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed"
+          className="w-full bg-tint text-white font-display font-bold text-[17px] py-4 rounded-full tap-active transition-all active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed"
         >
           Continue
         </button>

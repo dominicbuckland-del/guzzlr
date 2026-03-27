@@ -41,16 +41,16 @@ export default function ProfilePage() {
 
   return (
     <div className="px-4 pt-6 space-y-4 animate-fade-in bg-bg min-h-screen">
-      <h1 className="font-headline text-2xl font-bold text-white">Profile</h1>
+      <h1 className="font-display text-[22px] font-bold text-text-primary">Profile</h1>
 
       {/* Tab selector */}
-      <div className="flex bg-surface-high rounded-xl p-0.5">
+      <div className="flex bg-surface rounded-[10px] p-[3px]">
         {(['profile', 'whatif', 'settings'] as const).map((t) => (
           <button
             key={t}
             onClick={() => setSection(t)}
-            className={`flex-1 py-2 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-all ${
-              section === t ? 'bg-white text-black' : 'text-text-muted'
+            className={`flex-1 py-2 rounded-[8px] text-[13px] font-display font-bold transition-all ${
+              section === t ? 'bg-text-primary text-white' : 'text-text-secondary'
             }`}
           >
             {t === 'whatif' ? 'What If?' : t.charAt(0).toUpperCase() + t.slice(1)}
@@ -62,62 +62,62 @@ export default function ProfilePage() {
         <div className="space-y-4 animate-fade-in">
           {/* Car Card */}
           {car && (
-            <div className="card p-5">
+            <div className="card bg-surface rounded-[14px] p-5">
               <div className="flex items-center gap-4 mb-4">
                 <span className="text-5xl">{vehicleIcons[car.vehicleType] || '🚗'}</span>
                 <div>
-                  <h2 className="font-headline text-xl font-bold text-white">{car.year} {car.make} {car.model}</h2>
-                  <p className="text-text-secondary text-sm capitalize">{car.vehicleType}</p>
+                  <h2 className="font-display text-[17px] font-bold text-text-primary">{car.year} {car.make} {car.model}</h2>
+                  <p className="text-text-secondary text-[13px] capitalize">{car.vehicleType}</p>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-3">
-                <div className="bg-surface-high rounded-xl p-3 text-center">
-                  <p className="font-headline font-bold text-lg text-white">{car.tankSizeLitres}L</p>
-                  <p className="text-text-muted text-xs uppercase tracking-widest font-headline">Tank</p>
+                <div className="bg-surface-high rounded-[12px] p-3 text-center">
+                  <p className="font-display font-bold text-[17px] text-text-primary">{car.tankSizeLitres}L</p>
+                  <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">Tank</p>
                 </div>
-                <div className="bg-surface-high rounded-xl p-3 text-center">
-                  <p className="font-headline font-bold text-lg text-white">{car.fuelType}</p>
-                  <p className="text-text-muted text-xs uppercase tracking-widest font-headline">Fuel</p>
+                <div className="bg-surface-high rounded-[12px] p-3 text-center">
+                  <p className="font-display font-bold text-[17px] text-text-primary">{car.fuelType}</p>
+                  <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">Fuel</p>
                 </div>
-                <div className="bg-surface-high rounded-xl p-3 text-center">
-                  <p className="font-headline font-bold text-lg text-white">{car.ratedEconomyL100km}</p>
-                  <p className="text-text-muted text-xs uppercase tracking-widest font-headline">L/100km</p>
+                <div className="bg-surface-high rounded-[12px] p-3 text-center">
+                  <p className="font-display font-bold text-[17px] text-text-primary">{car.ratedEconomyL100km}</p>
+                  <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">L/100km</p>
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t border-surface-border">
-                <p className="text-text-secondary text-sm">
-                  Your {car.make} {car.model} costs you <span className="text-white font-headline font-bold">${weeklyCost.toFixed(0)}/week</span> in fuel
+              <div className="mt-4 pt-4" style={{ borderTop: '0.5px solid #d1d1d6' }}>
+                <p className="text-text-secondary text-[13px]">
+                  Your {car.make} {car.model} costs you <span className="text-text-primary font-display font-bold">${weeklyCost.toFixed(0)}/week</span> in fuel
                 </p>
               </div>
             </div>
           )}
 
           {/* Level Card */}
-          <div className="card p-4">
+          <div className="card bg-surface rounded-[14px] p-4">
             <div className="flex items-center gap-3">
               <span className="text-3xl">{levelInfo.icon}</span>
               <div>
-                <p className="font-headline font-bold text-white">Level {levelInfo.level}: {levelInfo.name}</p>
-                <p className="text-text-secondary text-sm">{user.xp.toLocaleString()} XP</p>
+                <p className="font-display font-bold text-[15px] text-text-primary">Level {levelInfo.level}: {levelInfo.name}</p>
+                <p className="text-text-secondary text-[13px]">{user.xp.toLocaleString()} XP</p>
               </div>
             </div>
           </div>
 
           {/* Stats */}
-          <div className="card p-4">
-            <h3 className="font-headline font-bold text-xs text-text-muted mb-3 uppercase tracking-widest">Your Stats</h3>
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-text-secondary text-sm">Total saved</span>
-                <span className="font-headline font-bold text-success">${(user.totalSavedCents / 100).toFixed(2)}</span>
+          <div className="card bg-surface rounded-[14px] p-4">
+            <h3 className="font-display font-bold text-[11px] text-text-muted mb-3 uppercase tracking-widest">Your Stats</h3>
+            <div className="space-y-0">
+              <div className="flex justify-between py-2.5" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+                <span className="text-text-secondary text-[15px]">Total saved</span>
+                <span className="font-display font-bold text-success text-[15px]">${(user.totalSavedCents / 100).toFixed(2)}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-text-secondary text-sm">Current streak</span>
-                <span className="font-headline font-bold text-white">{user.streakCount} days</span>
+              <div className="flex justify-between py-2.5" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+                <span className="text-text-secondary text-[15px]">Current streak</span>
+                <span className="font-display font-bold text-text-primary text-[15px]">{user.streakCount} days</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-text-secondary text-sm">Member since</span>
-                <span className="text-sm text-white">{new Date(user.createdAt).toLocaleDateString('en-AU', { month: 'short', year: 'numeric' })}</span>
+              <div className="flex justify-between py-2.5">
+                <span className="text-text-secondary text-[15px]">Member since</span>
+                <span className="text-[15px] text-text-primary">{new Date(user.createdAt).toLocaleDateString('en-AU', { month: 'short', year: 'numeric' })}</span>
               </div>
             </div>
           </div>

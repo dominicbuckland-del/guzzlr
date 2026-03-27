@@ -13,14 +13,14 @@ export default function MapFilters({ view, setView, fuelType, setFuelType }: Pro
   return (
     <div className="px-4 pt-4 pb-2 space-y-2 bg-bg">
       <div className="flex items-center gap-2">
-        <div className="flex bg-surface border border-surface-border rounded-lg p-0.5">
+        <div className="flex bg-surface rounded-[10px] p-[3px]">
           {(['map', 'list'] as const).map(v => (
-            <button key={v} onClick={() => setView(v)} className={`px-3 py-1.5 rounded-md text-xs font-bold capitalize transition-colors ${view === v ? 'bg-white text-black' : 'text-text-muted'}`}>{v}</button>
+            <button key={v} onClick={() => setView(v)} className={`px-3.5 py-[7px] rounded-[8px] text-[13px] font-bold capitalize transition-colors ${view === v ? 'bg-text-primary text-white' : 'text-text-secondary'}`}>{v}</button>
           ))}
         </div>
-        <div className="flex gap-1 overflow-x-auto no-scrollbar flex-1">
+        <div className="flex gap-1.5 overflow-x-auto no-scrollbar flex-1">
           {FUEL_TYPES.map(ft => (
-            <button key={ft} onClick={() => setFuelType(ft === active ? '' : ft)} className={`px-2.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${ft === active ? 'bg-white text-black' : 'bg-surface border border-surface-border text-text-muted'}`}>{ft}</button>
+            <button key={ft} onClick={() => setFuelType(ft === active ? '' : ft)} className={`px-3 py-[7px] rounded-full text-[13px] font-bold whitespace-nowrap transition-colors ${ft === active ? 'bg-text-primary text-white' : 'bg-surface text-text-secondary'}`}>{ft}</button>
           ))}
         </div>
       </div>

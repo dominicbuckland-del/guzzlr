@@ -16,10 +16,10 @@ interface Props {
 }
 
 function createMarkerIcon(brightness: 'cheap' | 'mid' | 'expensive') {
-  const color = brightness === 'cheap' ? '#4ade80' : brightness === 'expensive' ? '#ef4444' : '#ffffff'
+  const color = brightness === 'cheap' ? '#34C759' : brightness === 'expensive' ? '#FF3B30' : '#1d1d1f'
   return L.divIcon({
     className: '',
-    html: `<div style="width:24px;height:24px;border-radius:50%;background:${color};border:2px solid #0a0a0a;display:flex;align-items:center;justify-content:center"><div style="width:6px;height:6px;border-radius:50%;background:#0a0a0a"></div></div>`,
+    html: `<div style="width:24px;height:24px;border-radius:50%;background:${color};border:2px solid #ffffff;box-shadow:0 1px 4px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center"><div style="width:6px;height:6px;border-radius:50%;background:#ffffff"></div></div>`,
     iconSize: [24, 24],
     iconAnchor: [12, 12],
     popupAnchor: [0, -12],
@@ -33,7 +33,7 @@ function UserLocationMarker() {
     if (userLat && userLng) map.setView([userLat, userLng], 12)
   }, [userLat, userLng, map])
   if (!userLat || !userLng) return null
-  return <Circle center={[userLat, userLng]} radius={80} pathOptions={{ color: '#fff', fillColor: '#fff', fillOpacity: 0.8, weight: 2 }} />
+  return <Circle center={[userLat, userLng]} radius={80} pathOptions={{ color: '#007AFF', fillColor: '#007AFF', fillOpacity: 0.3, weight: 2 }} />
 }
 
 export default function FuelMap({ fuelType: fuelTypeOverride, brandFilter }: Props) {
@@ -67,13 +67,13 @@ export default function FuelMap({ fuelType: fuelTypeOverride, brandFilter }: Pro
   const selected = selectedStation ? stations.find(s => s.id === selectedStation) : null
 
   return (
-    <div className="flex-1 relative" style={{ minHeight: '400px' }}>
-      <MapContainer center={[userLat || -27.4698, userLng || 153.0251]} zoom={12} className="h-full w-full" zoomControl={false} style={{ height: '100%', width: '100%', background: '#0a0a0a' }}>
-        <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" attribution='&copy; OSM &copy; CARTO' />
+    <div className="flex-1 relative" style={{ minHeight: '400px', height: '100%' }}>
+      <MapContainer center={[userLat || -27.4698, userLng || 153.0251]} zoom={12} className="h-full w-full" zoomControl={false} style={{ height: '100%', width: '100%', background: '#f5f5f7' }}>
+        <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution='&copy; OSM &copy; CARTO' />
         <UserLocationMarker />
         {stations.map(station => (
           <Marker key={station.id} position={[station.latitude, station.longitude]} icon={createMarkerIcon(tier(station.price))} eventHandlers={{ click: () => setSelectedStation(station.id) }}>
-            <Popup><div style={{ color: '#fff', padding: '4px', minWidth: '100px' }}><strong>{station.name}</strong><br /><span style={{ fontWeight: 700, fontSize: '16px' }}>{station.price ? formatPrice(station.price) : '--'}</span><span style={{ color: '#888', fontSize: '11px' }}> c/L</span></div></Popup>
+            <Popup><div style={{ color: '#1d1d1f', padding: '4px', minWidth: '100px' }}><strong>{station.name}</strong><br /><span style={{ fontWeight: 700, fontSize: '16px' }}>{station.price ? formatPrice(station.price) : '--'}</span><span style={{ color: '#86868b', fontSize: '11px' }}> c/L</span></div></Popup>
           </Marker>
         ))}
       </MapContainer>

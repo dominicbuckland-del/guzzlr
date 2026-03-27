@@ -34,21 +34,21 @@ export default function BrandReportCard() {
   }, [])
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <p className="text-text-secondary text-sm">Average markup by brand vs area average (E10)</p>
-      {brands.map((b) => (
-        <div key={b.brand} className="card p-3 flex items-center justify-between">
+    <div className="space-y-0 animate-fade-in">
+      <p className="text-text-secondary text-[13px] mb-3">Average markup by brand vs area average (E10)</p>
+      {brands.map((b, i) => (
+        <div key={b.brand} className="flex items-center justify-between py-3" style={i < brands.length - 1 ? { borderBottom: '0.5px solid #d1d1d6' } : {}}>
           <div>
-            <p className="font-medium text-sm text-white">{b.brand}</p>
-            <p className="text-text-muted text-xs">{b.count} stations</p>
+            <p className="font-medium text-[15px] text-text-primary">{b.brand}</p>
+            <p className="text-text-muted text-[11px]">{b.count} stations</p>
           </div>
           <div className="text-right">
-            <p className={`font-headline font-bold text-sm ${
-              b.markup < 0 ? 'text-success' : b.markup > 2 ? 'text-error' : 'text-white'
+            <p className={`font-display font-bold text-[15px] ${
+              b.markup < 0 ? 'text-success' : b.markup > 2 ? 'text-error' : 'text-text-primary'
             }`}>
               {b.markup > 0 ? '+' : ''}{b.markup.toFixed(1)}c/L
             </p>
-            <p className="text-text-muted text-xs">
+            <p className="text-text-muted text-[11px]">
               {b.markup < 0 ? 'below avg' : 'above avg'}
             </p>
           </div>

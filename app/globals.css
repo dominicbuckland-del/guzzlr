@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap');
 
 * {
   box-sizing: border-box;
@@ -10,48 +10,44 @@
 }
 
 html, body {
-  background: #0a0a0a;
-  color: #ffffff;
-  font-family: 'Be Vietnam Pro', sans-serif;
+  background: #ffffff;
+  color: #1d1d1f;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
   min-height: 100vh;
   min-height: 100dvh;
-  overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
 .price-ticker {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  font-weight: 700;
   letter-spacing: -0.03em;
+  font-feature-settings: 'tnum';
 }
 
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
 
-/* Core card */
+/* iOS grouped card */
 .card {
-  background: #111111;
-  border: 1px solid #222222;
-  border-radius: 12px;
+  background: #f5f5f7;
+  border-radius: 16px;
 }
 
-/* Signal states -- only color in the app */
-.signal-fill-now {
-  border-color: #4ade8040;
+/* iOS grouped section (like Settings rows) */
+.group-card {
+  background: #f5f5f7;
+  border-radius: 16px;
+  overflow: hidden;
 }
-.signal-wait, .signal-fill-soon {
-  border-color: #ef444440;
+.group-card > * + * {
+  border-top: 0.5px solid #d1d1d6;
 }
-.signal-hold {
-  border-color: #88888840;
-}
+
+/* Signal states */
+.signal-fill-now { background: #f0fdf4; }
+.signal-wait, .signal-fill-soon { background: #fef2f2; }
+.signal-hold { background: #f5f5f7; }
 
 /* Skeleton */
 @keyframes shimmer {
@@ -59,19 +55,17 @@ h1, h2, h3, h4, h5, h6 {
   100% { background-position: 200% 0; }
 }
 .skeleton {
-  background: linear-gradient(90deg, #1a1a1a 25%, #222222 50%, #1a1a1a 75%);
+  background: linear-gradient(90deg, #f5f5f7 25%, #e8e8ed 50%, #f5f5f7 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
-/* Leaflet dark */
-.leaflet-container { background: #0a0a0a !important; }
-.leaflet-control-zoom a { background: #111 !important; color: #fff !important; border-color: #222 !important; }
-.leaflet-control-attribution { background: rgba(10,10,10,0.8) !important; color: #555 !important; font-size: 10px !important; }
-.leaflet-control-attribution a { color: #555 !important; }
-.leaflet-popup-content-wrapper { background: #111 !important; color: #fff !important; border-radius: 8px !important; border: 1px solid #222 !important; }
-.leaflet-popup-tip { background: #111 !important; }
+/* Leaflet */
+.leaflet-container { background: #ffffff !important; }
+.leaflet-control-zoom a { background: #f5f5f7 !important; color: #1d1d1f !important; border: none !important; border-radius: 8px !important; }
+.leaflet-control-attribution { background: rgba(255,255,255,0.9) !important; color: #86868b !important; font-size: 10px !important; }
+.leaflet-popup-content-wrapper { background: #fff !important; color: #1d1d1f !important; border-radius: 12px !important; box-shadow: 0 4px 24px rgba(0,0,0,0.08) !important; border: none !important; }
+.leaflet-popup-tip { background: #fff !important; }
 
 .pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 16px); }
-.tap-active:active { transform: scale(0.97); transition: transform 0.1s ease; }

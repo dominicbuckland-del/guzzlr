@@ -29,48 +29,47 @@ export default function FillConfirmation({ data, onDone }: Props) {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: 'spring' }}
-          className="w-24 h-24 rounded-full bg-surface-high mx-auto flex items-center justify-center"
+          className="w-24 h-24 rounded-full bg-surface mx-auto flex items-center justify-center"
         >
           <span className="text-5xl text-success">+</span>
         </motion.div>
       )}
 
       <div>
-        <h2 className="font-headline text-2xl font-bold text-white mb-1">
+        <h2 className="font-display text-[22px] font-bold text-text-primary mb-1">
           {data.beatAverage ? 'Nice save!' : 'Fill-up logged'}
         </h2>
-        <p className="text-text-secondary">{data.stationName}</p>
+        <p className="text-text-secondary text-[15px]">{data.stationName}</p>
       </div>
 
-      <div className="card p-5 text-left space-y-3">
-        <div className="flex justify-between">
-          <span className="text-text-secondary">Price paid</span>
-          <span className="font-headline font-bold text-white">{(data.pricePerLitreCents / 10).toFixed(1)}c/L</span>
+      <div className="card bg-surface rounded-[14px] p-5 text-left space-y-0">
+        <div className="flex justify-between py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+          <span className="text-text-secondary text-[15px]">Price paid</span>
+          <span className="font-display font-bold text-text-primary text-[15px]">{(data.pricePerLitreCents / 10).toFixed(1)}c/L</span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-text-secondary">Total</span>
-          <span className="font-headline font-bold text-white">${(data.totalCostCents / 100).toFixed(2)}</span>
+        <div className="flex justify-between py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+          <span className="text-text-secondary text-[15px]">Total</span>
+          <span className="font-display font-bold text-text-primary text-[15px]">${(data.totalCostCents / 100).toFixed(2)}</span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-text-secondary">vs area average</span>
-          <span className={`font-headline font-bold ${parseFloat(data.percentVsAvg) < 0 ? 'text-success' : 'text-error'}`}>
+        <div className="flex justify-between py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+          <span className="text-text-secondary text-[15px]">vs area average</span>
+          <span className={`font-display font-bold text-[15px] ${parseFloat(data.percentVsAvg) < 0 ? 'text-success' : 'text-error'}`}>
             {data.percentVsAvg}%
           </span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-text-secondary">{data.beatAverage ? 'You saved' : 'Overspent'}</span>
-          <span className={`font-headline font-bold ${data.beatAverage ? 'text-success' : 'text-error'}`}>
+        <div className="flex justify-between py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+          <span className="text-text-secondary text-[15px]">{data.beatAverage ? 'You saved' : 'Overspent'}</span>
+          <span className={`font-display font-bold text-[15px] ${data.beatAverage ? 'text-success' : 'text-error'}`}>
             ${Math.abs(data.savedDollars).toFixed(2)}
           </span>
         </div>
-        <hr className="border-surface-border" />
-        <div className="flex justify-between">
-          <span className="text-text-secondary">XP earned</span>
-          <span className="font-headline font-bold text-white">+{data.xp} XP</span>
+        <div className="flex justify-between py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+          <span className="text-text-secondary text-[15px]">XP earned</span>
+          <span className="font-display font-bold text-tint text-[15px]">+{data.xp} XP</span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-text-secondary">Streak</span>
-          <span className="font-headline font-bold text-white">
+        <div className="flex justify-between py-3">
+          <span className="text-text-secondary text-[15px]">Streak</span>
+          <span className="font-display font-bold text-text-primary text-[15px]">
             {data.newStreak > 0 ? `${data.newStreak} days` : 'Reset'}
           </span>
         </div>
@@ -78,7 +77,7 @@ export default function FillConfirmation({ data, onDone }: Props) {
 
       <button
         onClick={onDone}
-        className="w-full bg-white text-black font-headline font-bold text-base py-3.5 rounded-full tap-active"
+        className="w-full bg-tint text-white font-display font-bold text-[15px] py-4 rounded-[14px] tap-active"
       >
         Done
       </button>

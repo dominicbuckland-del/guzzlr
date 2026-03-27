@@ -24,7 +24,7 @@ export default function AchievementGrid() {
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <p className="text-text-secondary text-sm">
+      <p className="text-text-secondary text-[13px]">
         {unlockedKeys.size} / {ACHIEVEMENTS.length} unlocked
       </p>
 
@@ -32,7 +32,7 @@ export default function AchievementGrid() {
         const achievements = ACHIEVEMENTS.filter(a => a.category === cat.key)
         return (
           <div key={cat.key}>
-            <h3 className="font-headline font-bold text-xs text-text-muted mb-2 uppercase tracking-widest">{cat.label}</h3>
+            <h3 className="font-display font-bold text-[11px] text-text-muted mb-2 uppercase tracking-widest">{cat.label}</h3>
             <div className="grid grid-cols-4 gap-3">
               {achievements.map(a => (
                 <Badge
@@ -56,21 +56,22 @@ export default function AchievementGrid() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-8"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-8"
             onClick={() => setSelectedKey(null)}
           >
             <motion.div
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
-              className="bg-surface border border-surface-border rounded-2xl p-6 max-w-[320px] w-full text-center"
+              className="bg-white rounded-[16px] p-6 max-w-[320px] w-full text-center"
+              style={{ boxShadow: '0 8px 40px rgba(0,0,0,0.12)' }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="text-5xl mb-3">{selected.icon}</div>
-              <h3 className="font-headline text-xl font-bold text-white mb-1">{selected.name}</h3>
-              <p className="text-text-secondary text-sm mb-3">{selected.description}</p>
-              <div className={`inline-block px-3 py-1 rounded-full text-xs font-headline font-bold uppercase tracking-widest ${
-                isUnlocked ? 'bg-surface-high border border-white/20 text-white' : 'bg-surface-high border border-surface-border text-text-muted opacity-30'
+              <h3 className="font-display text-[17px] font-bold text-text-primary mb-1">{selected.name}</h3>
+              <p className="text-text-secondary text-[13px] mb-3">{selected.description}</p>
+              <div className={`inline-block px-3 py-1 rounded-full text-[11px] font-display font-bold uppercase tracking-widest ${
+                isUnlocked ? 'bg-surface text-tint' : 'bg-surface text-text-muted opacity-40'
               }`}>
                 {isUnlocked ? 'Unlocked!' : 'Locked'}
               </div>
