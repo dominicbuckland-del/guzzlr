@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { hapticSuccess } from '@/lib/haptics'
 
 interface Props {
   data: {
@@ -21,6 +22,10 @@ interface Props {
 export default function FillConfirmation({ data, onDone }: Props) {
   const [shared, setShared] = useState(false)
   const bigSave = data.beatAverage && data.savedDollars > 5
+
+  useEffect(() => {
+    hapticSuccess()
+  }, [])
 
   const handleShare = async () => {
     const text = `Just saved $${data.savedDollars.toFixed(2)} on fuel at ${data.stationName} with Guzzlr! That's ${Math.abs(parseFloat(data.percentVsAvg))}% below the area average. #Guzzlr #FuelSavings`

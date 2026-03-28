@@ -2,15 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { STATIONS } from '@/seed/stations'
-import { generatePriceHistory, getLatestPrices, getAreaAverage } from '@/seed/prices'
+import { getCachedLatestPrices, getCachedAreaAverage } from '@/lib/price-cache'
 
 export default function BrandReportCard() {
   const [brands, setBrands] = useState<{ brand: string; markup: number; count: number }[]>([])
 
   useEffect(() => {
-    const allPrices = generatePriceHistory(STATIONS)
-    const latestPrices = getLatestPrices(allPrices)
-    const avg = getAreaAverage(latestPrices, 'E10')
+    const latestPrices = getCachedLatestPrices()
+    const avg = getCachedAreaAverage('E10')
 
     const brandMap = new Map<string, { total: number; count: number }>()
     for (const station of STATIONS) {

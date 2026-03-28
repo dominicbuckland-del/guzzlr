@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import BottomNav from '@/components/layout/BottomNav'
+import ServiceWorkerRegistrar from '@/components/layout/ServiceWorkerRegistrar'
 
 export const metadata: Metadata = {
   title: 'Guzzlr',
@@ -18,12 +19,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en-AU" suppressHydrationWarning>
       <body className="bg-bg text-text-primary min-h-screen antialiased">
         <main className="max-w-md mx-auto pb-24 min-h-screen">
           {children}
         </main>
         <BottomNav />
+        <ServiceWorkerRegistrar />
       </body>
     </html>
   )

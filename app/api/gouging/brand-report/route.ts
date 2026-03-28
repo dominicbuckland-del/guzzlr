@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import { STATIONS } from '@/seed/stations';
-import { generatePriceHistory, getLatestPrices, getAreaAverage } from '@/seed/prices';
+import { getCachedLatestPrices, getCachedAreaAverage } from '@/lib/price-cache';
 
 export async function GET() {
-  const allPrices = generatePriceHistory(STATIONS);
-  const latestPrices = getLatestPrices(allPrices);
-  const areaAverage = getAreaAverage(latestPrices, 'E10');
+  const latestPrices = getCachedLatestPrices();
+  const areaAverage = getCachedAreaAverage('E10');
 
   const brandMap = new Map<string, { total: number; count: number }>();
 

@@ -8,6 +8,8 @@ import { SkeletonCard } from '@/components/shared/Skeleton'
 import WhatIfCalculator from '@/components/profile/WhatIfCalculator'
 import DriverBenchmark from '@/components/profile/DriverBenchmark'
 import Settings from '@/components/profile/Settings'
+import FuelCalendar from '@/components/profile/FuelCalendar'
+import PageTransition from '@/components/layout/PageTransition'
 
 const vehicleIcons: Record<string, string> = {
   sedan: '🚗', suv: '🚙', ute: '🛻', hatch: '🚗', van: '🚐',
@@ -44,7 +46,7 @@ export default function ProfilePage() {
   const memberSince = new Date(user.createdAt).toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
 
   return (
-    <div className="px-4 pt-6 space-y-4 animate-fade-in bg-bg min-h-screen pb-8">
+    <PageTransition><div className="px-4 pt-6 space-y-4 bg-bg min-h-screen pb-8">
       <h1 className="font-display text-[22px] font-bold text-text-primary">Profile</h1>
 
       {/* Tab selector */}
@@ -108,6 +110,8 @@ export default function ProfilePage() {
             </div>
           )}
 
+          <FuelCalendar />
+
           {/* Level Card */}
           <div className="card bg-surface rounded-[14px] p-4">
             <div className="flex items-center gap-3">
@@ -153,6 +157,6 @@ export default function ProfilePage() {
 
       {section === 'whatif' && <WhatIfCalculator />}
       {section === 'settings' && <Settings />}
-    </div>
+    </div></PageTransition>
   )
 }

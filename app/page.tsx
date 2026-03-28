@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useMemo } from 'react'
+import { motion } from 'framer-motion'
 import { useGuzzlrStore } from '@/lib/store'
 import { getLevelInfo } from '@/lib/constants'
 import { DEMO_FILLUPS, DEMO_ACHIEVEMENTS, DEMO_FEED } from '@/seed/users'
@@ -9,6 +10,7 @@ import QuickStatCard from '@/components/home/QuickStatCard'
 import PriceTrendChart from '@/components/home/PriceTrendChart'
 import FuelFeed from '@/components/home/FuelFeed'
 import { SkeletonSignal, SkeletonCard } from '@/components/shared/Skeleton'
+import PageTransition from '@/components/layout/PageTransition'
 import Link from 'next/link'
 
 function getGreeting(): string {
@@ -42,7 +44,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="px-5 pt-14 space-y-5 animate-fade-in">
+    <PageTransition><div className="px-5 pt-14 space-y-5">
       {/* Greeting */}
       <p className="text-[22px] font-bold tracking-tight">{greeting}</p>
 
@@ -101,14 +103,25 @@ export default function HomePage() {
       </Link>
 
       {/* Stats -- streak removed, now in stat bar above */}
-      <div className="flex gap-3 overflow-x-auto -mx-5 px-5 pb-1">
-        <QuickStatCard type="cheapest" />
-        <QuickStatCard type="weekly" />
-        <QuickStatCard type="saved" />
-      </div>
+      <motion.div
+        className="flex gap-3 overflow-x-auto -mx-5 px-5 pb-1"
+        initial="hidden"
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+      >
+        {(['cheapest', 'weekly', 'saved'] as const).map((type) => (
+          <motion.div
+            key={type}
+            variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <QuickStatCard type={type} />
+          </motion.div>
+        ))}
+      </motion.div>
 
       <PriceTrendChart />
       <FuelFeed />
-    </div>
+    </div></PageTransition>
   )
 }

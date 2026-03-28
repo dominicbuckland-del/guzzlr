@@ -4,10 +4,11 @@
 import { useState, useEffect } from 'react'
 import { useGuzzlrStore } from '@/lib/store'
 import { STATIONS } from '@/seed/stations'
-import { generatePriceHistory, getLatestPrices, getAreaAverage } from '@/seed/prices'
+import { getCachedLatestPrices, getCachedAreaAverage } from '@/lib/price-cache'
 import { formatPrice } from '@/lib/calculations'
 import { SkeletonCard } from '@/components/shared/Skeleton'
 import BrandReportCard from '@/components/gouging/BrandReportCard'
+import PageTransition from '@/components/layout/PageTransition'
 
 export default function GougingPage() {
   const { car } = useGuzzlrStore()
@@ -17,9 +18,8 @@ export default function GougingPage() {
   const [tab, setTab] = useState<'gougers' | 'brands'>('gougers')
 
   useEffect(() => {
-    const allPrices = generatePriceHistory(STATIONS)
-    const latestPrices = getLatestPrices(allPrices)
-    const avg = getAreaAverage(latestPrices, 'E10')
+    const latestPrices = getCachedLatestPrices()
+    const avg = getCachedAreaAverage('E10')
     setAreaAverage(avg)
 
     const tankSize = car?.tankSizeLitres || 80
@@ -78,7 +78,7 @@ export default function GougingPage() {
   const worstOffender = gougers.length > 0 ? gougers[0] : null
 
   return (
-    <div className="px-4 pt-6 space-y-4 animate-fade-in bg-bg min-h-screen pb-8">
+    <PageTransition><div className="px-4 pt-6 space-y-4 bg-bg min-h-screen pb-8">
       <div>
         <h1 className="font-display text-[22px] font-bold text-text-primary">Gouging Report</h1>
         <p className="text-text-secondary text-[13px]">{weekStr}</p>
@@ -181,6 +181,6 @@ export default function GougingPage() {
       ) : (
         <BrandReportCard />
       )}
-    </div>
+    </div></PageTransition>
   )
 }

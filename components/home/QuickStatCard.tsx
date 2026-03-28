@@ -2,9 +2,10 @@
 
 import { useGuzzlrStore } from '@/lib/store'
 import { STATIONS } from '@/seed/stations'
-import { generatePriceHistory, getLatestPrices } from '@/seed/prices'
+import { getCachedLatestPrices } from '@/lib/price-cache'
 import { distanceKm, formatPrice, calculateFillCost } from '@/lib/calculations'
 import AnimatedNumber from '@/components/shared/AnimatedNumber'
+import Sparkline from '@/components/shared/Sparkline'
 
 interface Props { type: 'cheapest' | 'weekly' | 'saved' | 'streak' }
 
@@ -14,7 +15,7 @@ export default function QuickStatCard({ type }: Props) {
   const content = (() => {
     switch (type) {
       case 'cheapest': {
-        const latestPrices = getLatestPrices(generatePriceHistory(STATIONS))
+        const latestPrices = getCachedLatestPrices()
         const ft = car?.fuelType || 'Diesel'
         const cheapest = STATIONS.map(s => ({
           ...s, price: latestPrices.find(p => p.stationId === s.id && p.fuelType === ft)?.priceCents || 9999,
@@ -39,9 +40,23 @@ export default function QuickStatCard({ type }: Props) {
         }).reduce((s, f) => s + f.totalCostCents, 0) / 100
         const diff = lastWeekSpend > 0 ? thisWeekSpend - lastWeekSpend : 0
         const diffPct = lastWeekSpend > 0 ? Math.round((diff / lastWeekSpend) * 100) : 0
+
+        // Build last 8 weeks of spending for sparkline
+        const weeklySpendData: number[] = []
+        for (let w = 7; w >= 0; w--) {
+          const weekStart = Date.now() - (w + 1) * 7 * 24 * 60 * 60 * 1000
+          const weekEnd = Date.now() - w * 7 * 24 * 60 * 60 * 1000
+          const spend = fillups.filter(f => {
+            const t = new Date(f.filledAt).getTime()
+            return t > weekStart && t <= weekEnd
+          }).reduce((s, f) => s + f.totalCostCents, 0) / 100
+          weeklySpendData.push(spend)
+        }
+
         return <>
           <p className="text-text-muted text-[11px] font-semibold uppercase tracking-wider">This Week</p>
           <AnimatedNumber value={thisWeekSpend} prefix="$" className="price-ticker text-[22px] block mt-1" />
+          <Sparkline data={weeklySpendData} color={diff <= 0 ? '#34C759' : '#FF3B30'} />
           {lastWeekSpend > 0 && (
             <p className={`text-[12px] font-medium mt-1 ${diff <= 0 ? 'text-success' : 'text-error'}`}>
               {diff <= 0 ? '↓' : '↑'} {Math.abs(diffPct)}% vs last week

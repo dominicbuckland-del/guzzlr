@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { hapticLight } from '@/lib/haptics'
 
 const tabs = [
   { href: '/', label: 'Home', icon: '\u2302' },
@@ -16,12 +17,12 @@ export default function BottomNav() {
   if (pathname?.startsWith('/onboarding')) return null
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl" style={{ borderTop: '0.5px solid #d1d1d6' }}>
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl" style={{ borderTop: '0.5px solid #d1d1d6' }} role="tablist" aria-label="Main navigation">
       <div className="max-w-md mx-auto flex items-center justify-around px-2 pb-safe pt-1.5">
         {tabs.map(({ href, label, icon }) => {
           const active = href === '/' ? pathname === '/' : pathname?.startsWith(href) || false
           return (
-            <Link key={href} href={href} className="flex flex-col items-center gap-0.5 py-1 px-3 min-w-[52px]">
+            <Link key={href} href={href} className="flex flex-col items-center gap-0.5 py-1 px-3 min-w-[52px]" role="tab" aria-selected={active} aria-label={label} onClick={() => hapticLight()}>
               <span className={`text-xl leading-none ${active ? 'text-tint' : 'text-text-muted'}`}>{icon}</span>
               <span className={`text-[10px] font-medium ${active ? 'text-tint' : 'text-text-muted'}`}>{label}</span>
             </Link>

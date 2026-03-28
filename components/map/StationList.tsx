@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { useGuzzlrStore } from '@/lib/store'
 import { STATIONS } from '@/seed/stations'
-import { generatePriceHistory, getLatestPrices, getAreaAverage } from '@/seed/prices'
+import { getCachedLatestPrices, getCachedAreaAverage } from '@/lib/price-cache'
 import { distanceKm, formatPrice, calculateFillCost, calculateSavings } from '@/lib/calculations'
 import type { SortMode } from './MapFilters'
 
@@ -14,8 +14,8 @@ export default function StationList({ fuelType: override, brandFilter, sortMode 
   const fuelType = override || car?.fuelType || 'Diesel'
 
   const stations = useMemo(() => {
-    const latestPrices = getLatestPrices(generatePriceHistory(STATIONS))
-    const avg = getAreaAverage(latestPrices, fuelType)
+    const latestPrices = getCachedLatestPrices()
+    const avg = getCachedAreaAverage(fuelType)
     const filtered = STATIONS.map(s => {
       const price = latestPrices.find(p => p.stationId === s.id && p.fuelType === fuelType)
       const dist = distanceKm(userLat || -27.47, userLng || 153.03, s.latitude, s.longitude)

@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { hapticLight } from '@/lib/haptics'
 import { useGuzzlrStore } from '@/lib/store'
 import { STATIONS } from '@/seed/stations'
-import { generatePriceHistory, getLatestPrices, getAreaAverage } from '@/seed/prices'
+import { getCachedLatestPrices, getCachedAreaAverage } from '@/lib/price-cache'
 import { distanceKm } from '@/lib/calculations'
 import { XP_LOG_FILLUP, XP_BEAT_AVERAGE, XP_CYCLE_LOW_FILL } from '@/lib/constants'
 import { getCycleState } from '@/lib/cycle-engine'
@@ -33,10 +34,9 @@ export default function FillUpForm() {
     .slice(0, 5)
 
   // Get latest prices for suggestion
-  const allPrices = generatePriceHistory(STATIONS)
-  const latestPrices = getLatestPrices(allPrices)
+  const latestPrices = getCachedLatestPrices()
   const fuelType = car?.fuelType || 'Diesel'
-  const areaAverage = getAreaAverage(latestPrices, fuelType)
+  const areaAverage = getCachedAreaAverage(fuelType)
 
   // Quick-fill suggestion
   const typicalLitres = car ? Math.round(car.tankSizeLitres * 0.65) : 65
@@ -78,6 +78,7 @@ export default function FillUpForm() {
   }, [litres, priceCpl])
 
   const handleSubmit = () => {
+    hapticLight()
     const l = parseFloat(litres) || 0
     const p = Math.round(parseFloat(priceCpl) * 10) || 0
     const t = Math.round(parseFloat(totalDollars) * 100) || 0

@@ -9,6 +9,7 @@ import AnimatedNumber from '@/components/shared/AnimatedNumber'
 import AchievementGrid from '@/components/rewards/AchievementGrid'
 import Leaderboard from '@/components/rewards/Leaderboard'
 import { SkeletonCard } from '@/components/shared/Skeleton'
+import PageTransition from '@/components/layout/PageTransition'
 
 export default function RewardsPage() {
   const { user, fillups } = useGuzzlrStore()
@@ -82,7 +83,7 @@ export default function RewardsPage() {
   const bestFill = [...fillups].sort((a, b) => b.savedCents - a.savedCents)[0]
 
   return (
-    <div className="px-4 pt-6 space-y-4 animate-fade-in min-h-screen bg-bg">
+    <PageTransition><div className="px-4 pt-6 space-y-4 min-h-screen bg-bg">
       <h1 className="font-display text-[22px] font-bold text-text-primary">Rewards</h1>
 
       {/* XP / Level Card */}
@@ -235,6 +236,6 @@ export default function RewardsPage() {
 
       {tab === 'achievements' && <AchievementGrid />}
       {tab === 'leaderboard' && <Leaderboard />}
-    </div>
+    </div></PageTransition>
   )
 }

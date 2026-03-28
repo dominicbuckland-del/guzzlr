@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { STATIONS } from '@/seed/stations';
-import { generatePriceHistory, getLatestPrices, getAreaAverage } from '@/seed/prices';
+import { getCachedLatestPrices, getCachedAreaAverage } from '@/lib/price-cache';
 import { distanceKm, calculateFillCost, calculateSavings } from '@/lib/calculations';
 
 export async function GET(request: NextRequest) {
@@ -11,9 +11,8 @@ export async function GET(request: NextRequest) {
   const fuelType = searchParams.get('fuel_type') || 'Diesel';
   const tankSize = parseFloat(searchParams.get('tank_size') || '80');
 
-  const allPrices = generatePriceHistory(STATIONS);
-  const latestPrices = getLatestPrices(allPrices);
-  const areaAverage = getAreaAverage(latestPrices, fuelType);
+  const latestPrices = getCachedLatestPrices();
+  const areaAverage = getCachedAreaAverage(fuelType);
 
   const stations = STATIONS
     .map((station) => {

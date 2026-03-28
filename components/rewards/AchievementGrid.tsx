@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { hapticMedium } from '@/lib/haptics'
 import { ACHIEVEMENTS } from '@/lib/achievements'
 import { DEMO_ACHIEVEMENTS } from '@/seed/users'
 import Badge from '@/components/shared/Badge'
@@ -103,7 +104,7 @@ export default function AchievementGrid() {
                         name=""
                         unlocked={unlocked}
                         size="md"
-                        onClick={() => setSelectedKey(a.key === selectedKey ? null : a.key)}
+                        onClick={() => { hapticMedium(); setSelectedKey(a.key === selectedKey ? null : a.key) }}
                       />
                     </div>
                     <span className={`text-[11px] font-medium text-center leading-tight ${unlocked ? 'text-text-primary' : 'text-text-muted'}`}>

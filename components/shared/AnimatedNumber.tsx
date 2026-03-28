@@ -48,7 +48,7 @@ export default function AnimatedNumber({
   }, [value, duration])
 
   return (
-    <span className={className}>
+    <span className={className} aria-label={`${prefix}${value.toFixed(decimals)}${suffix}`}>
       {prefix}{displayValue.toFixed(decimals)}{suffix}
     </span>
   )

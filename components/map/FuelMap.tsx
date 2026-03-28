@@ -6,7 +6,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useGuzzlrStore } from '@/lib/store'
 import { STATIONS } from '@/seed/stations'
-import { generatePriceHistory, getLatestPrices, getAreaAverage } from '@/seed/prices'
+import { getCachedLatestPrices, getCachedAreaAverage } from '@/lib/price-cache'
 import { distanceKm, formatPrice, calculateFillCost, calculateSavings } from '@/lib/calculations'
 import StationDetail from '@/components/map/StationDetail'
 
@@ -78,9 +78,8 @@ export default function FuelMap({ fuelType: fuelTypeOverride, brandFilter }: Pro
   const fuelType = fuelTypeOverride || car?.fuelType || 'Diesel'
 
   const { stations, areaAverage } = useMemo(() => {
-    const allPrices = generatePriceHistory(STATIONS)
-    const latestPrices = getLatestPrices(allPrices)
-    const avg = getAreaAverage(latestPrices, fuelType)
+    const latestPrices = getCachedLatestPrices()
+    const avg = getCachedAreaAverage(fuelType)
     const data = STATIONS.map(s => {
       const price = latestPrices.find(p => p.stationId === s.id && p.fuelType === fuelType)
       const dist = distanceKm(userLat || -27.47, userLng || 153.03, s.latitude, s.longitude)

@@ -3,11 +3,13 @@
 import { useState } from 'react'
 import FillUpForm from '@/components/log/FillUpForm'
 import FillHistory from '@/components/log/FillHistory'
+import PageTransition from '@/components/layout/PageTransition'
 
 export default function LogPage() {
   const [tab, setTab] = useState<'log' | 'history'>('log')
 
   return (
+    <PageTransition>
     <div className="px-4 pt-8 bg-bg min-h-screen">
       <h1 className="font-display text-[22px] font-bold text-text-primary mb-4">Fill-Up</h1>
       <div className="flex bg-surface rounded-[10px] p-[3px] mb-5">
@@ -17,5 +19,6 @@ export default function LogPage() {
       </div>
       {tab === 'log' ? <FillUpForm /> : <FillHistory />}
     </div>
+    </PageTransition>
   )
 }

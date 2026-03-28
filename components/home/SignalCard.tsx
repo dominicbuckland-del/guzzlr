@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 import { useGuzzlrStore } from '@/lib/store'
 import { getCycleState } from '@/lib/cycle-engine'
 import { CycleState } from '@/lib/types'
@@ -30,7 +31,12 @@ export default function SignalCard() {
   const color = cycle.signal === 'fill_now' ? '#34C759' : cycle.signal === 'hold' ? '#86868b' : '#FF3B30'
 
   return (
-    <div className={`card p-5 ${signalClass} transition-all`} style={isUrgent ? { borderLeft: `3px solid ${color}` } : undefined}>
+    <motion.div
+      initial={{ scale: 0.97, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+    >
+    <div className={`card p-5 ${signalClass} transition-all`} role="status" aria-live="polite" style={isUrgent ? { borderLeft: `3px solid ${color}` } : undefined}>
       <div className="flex items-center gap-2.5 mb-3">
         <div className="relative flex items-center justify-center">
           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
@@ -47,5 +53,6 @@ export default function SignalCard() {
       )}
       <p className="text-text-muted text-[11px] mt-3">Last updated {updatedAt}</p>
     </div>
+    </motion.div>
   )
 }
