@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useGuzzlrStore } from '@/lib/store'
 import { getUniqueMakes, getModelsByMake, getYearsByMakeModel, getCarSpecs } from '@/lib/car-data'
 
@@ -114,37 +115,49 @@ export default function CarSelector({ onNext, onBack }: Props) {
         </div>
       </div>
 
-      {specs && (
-        <div className="mt-6 card bg-surface rounded-[14px] p-4 animate-fade-in">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="text-4xl">{vehicleIcons[specs.vehicleType] || '🚗'}</span>
-            <div>
-              <p className="font-display font-bold text-[17px] text-text-primary">{year} {specs.make} {specs.model}</p>
-              <p className="text-text-secondary text-[13px]">{specs.vehicleType.charAt(0).toUpperCase() + specs.vehicleType.slice(1)}</p>
+      <AnimatePresence>
+        {specs && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+            className="mt-6 card bg-surface rounded-[14px] p-4"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <span className="text-4xl">{vehicleIcons[specs.vehicleType] || '🚗'}</span>
+              <div>
+                <p className="font-display font-bold text-[17px] text-text-primary">{year} {specs.make} {specs.model}</p>
+                <p className="text-text-secondary text-[13px]">{specs.vehicleType.charAt(0).toUpperCase() + specs.vehicleType.slice(1)}</p>
+              </div>
             </div>
-          </div>
-          <div className="grid grid-cols-3 gap-3 text-center">
-            <div className="bg-surface-high rounded-[12px] p-2">
-              <p className="text-text-primary font-display font-bold text-[15px]">{specs.tankSizeLitres}L</p>
-              <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">Tank</p>
+            <div className="grid grid-cols-3 gap-3 text-center">
+              <div className="bg-surface-high rounded-[12px] p-2">
+                <p className="text-text-primary font-display font-bold text-[15px]">{specs.tankSizeLitres}L</p>
+                <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">Tank</p>
+              </div>
+              <div className="bg-surface-high rounded-[12px] p-2">
+                <p className="text-text-primary font-display font-bold text-[15px]">{specs.fuelType}</p>
+                <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">Fuel</p>
+              </div>
+              <div className="bg-surface-high rounded-[12px] p-2">
+                <p className="text-text-primary font-display font-bold text-[15px]">{specs.ratedEconomyL100km}</p>
+                <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">L/100km</p>
+              </div>
             </div>
-            <div className="bg-surface-high rounded-[12px] p-2">
-              <p className="text-text-primary font-display font-bold text-[15px]">{specs.fuelType}</p>
-              <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">Fuel</p>
-            </div>
-            <div className="bg-surface-high rounded-[12px] p-2">
-              <p className="text-text-primary font-display font-bold text-[15px]">{specs.ratedEconomyL100km}</p>
-              <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">L/100km</p>
-            </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="mt-auto pb-8">
         <button
           onClick={handleNext}
           disabled={!specs}
-          className="w-full bg-tint text-white font-display font-bold text-[17px] py-4 rounded-full tap-active transition-all active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed"
+          className={`w-full font-display font-bold text-[17px] py-4 rounded-full tap-active transition-all active:scale-[0.98] ${
+            specs
+              ? 'bg-tint text-white'
+              : 'bg-surface-high text-text-muted opacity-40 cursor-not-allowed'
+          }`}
         >
           Continue
         </button>

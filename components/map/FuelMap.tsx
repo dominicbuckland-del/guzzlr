@@ -15,15 +15,51 @@ interface Props {
   brandFilter: string[]
 }
 
-function createMarkerIcon(brightness: 'cheap' | 'mid' | 'expensive') {
+function createMarkerIcon(brightness: 'cheap' | 'mid' | 'expensive', isSelected = false) {
   const color = brightness === 'cheap' ? '#34C759' : brightness === 'expensive' ? '#FF3B30' : '#1d1d1f'
+  const size = isSelected ? 32 : 24
+  const innerSize = isSelected ? 8 : 6
+  const pulseRing = isSelected
+    ? `<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:${size + 16}px;height:${size + 16}px;border-radius:50%;background:${color};opacity:0.2;animation:guzzlr-pulse 1.5s ease-in-out infinite"></div>`
+    : ''
   return L.divIcon({
     className: '',
-    html: `<div style="width:24px;height:24px;border-radius:50%;background:${color};border:2px solid #ffffff;box-shadow:0 1px 4px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center"><div style="width:6px;height:6px;border-radius:50%;background:#ffffff"></div></div>`,
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-    popupAnchor: [0, -12],
+    html: `<div style="position:relative;width:${size + 16}px;height:${size + 16}px;display:flex;align-items:center;justify-content:center">${pulseRing}<div style="position:relative;z-index:1;width:${size}px;height:${size}px;border-radius:50%;background:${color};border:2.5px solid #ffffff;box-shadow:0 1px 6px rgba(0,0,0,${isSelected ? '0.25' : '0.15'});display:flex;align-items:center;justify-content:center;transition:all 0.2s ease"><div style="width:${innerSize}px;height:${innerSize}px;border-radius:50%;background:#ffffff"></div></div></div>`,
+    iconSize: [size + 16, size + 16],
+    iconAnchor: [(size + 16) / 2, (size + 16) / 2],
+    popupAnchor: [0, -(size + 16) / 2],
   })
+}
+
+function LocateMeButton() {
+  const { userLat, userLng } = useGuzzlrStore()
+  const map = useMap()
+  const handleClick = () => {
+    if (userLat && userLng) map.flyTo([userLat, userLng], 13, { duration: 0.8 })
+  }
+  return (
+    <button
+      onClick={handleClick}
+      aria-label="Locate me"
+      style={{
+        position: 'absolute', bottom: 24, right: 16, zIndex: 1000,
+        width: 44, height: 44, borderRadius: 12,
+        background: '#ffffff', border: 'none',
+        boxShadow: '0 2px 12px rgba(0,0,0,0.12)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        cursor: 'pointer',
+      }}
+    >
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="10" r="3" fill="#007AFF" />
+        <circle cx="10" cy="10" r="7" stroke="#007AFF" strokeWidth="1.5" fill="none" />
+        <line x1="10" y1="0" x2="10" y2="4" stroke="#007AFF" strokeWidth="1.5" strokeLinecap="round" />
+        <line x1="10" y1="16" x2="10" y2="20" stroke="#007AFF" strokeWidth="1.5" strokeLinecap="round" />
+        <line x1="0" y1="10" x2="4" y2="10" stroke="#007AFF" strokeWidth="1.5" strokeLinecap="round" />
+        <line x1="16" y1="10" x2="20" y2="10" stroke="#007AFF" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    </button>
+  )
 }
 
 function UserLocationMarker() {
@@ -68,15 +104,27 @@ export default function FuelMap({ fuelType: fuelTypeOverride, brandFilter }: Pro
 
   return (
     <div className="flex-1 relative" style={{ minHeight: '400px', height: '100%' }}>
+      <style>{`@keyframes guzzlr-pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.2}50%{transform:translate(-50%,-50%) scale(1.5);opacity:0}}`}</style>
       <MapContainer center={[userLat || -27.4698, userLng || 153.0251]} zoom={12} className="h-full w-full" zoomControl={false} style={{ height: '100%', width: '100%', background: '#f5f5f7' }}>
         <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution='&copy; OSM &copy; CARTO' />
         <UserLocationMarker />
         {stations.map(station => (
-          <Marker key={station.id} position={[station.latitude, station.longitude]} icon={createMarkerIcon(tier(station.price))} eventHandlers={{ click: () => setSelectedStation(station.id) }}>
+          <Marker key={station.id} position={[station.latitude, station.longitude]} icon={createMarkerIcon(tier(station.price), station.id === selectedStation)} eventHandlers={{ click: () => setSelectedStation(station.id) }}>
             <Popup><div style={{ color: '#1d1d1f', padding: '4px', minWidth: '100px' }}><strong>{station.name}</strong><br /><span style={{ fontWeight: 700, fontSize: '16px' }}>{station.price ? formatPrice(station.price) : '--'}</span><span style={{ color: '#86868b', fontSize: '11px' }}> c/L</span></div></Popup>
           </Marker>
         ))}
+        <LocateMeButton />
       </MapContainer>
+      {/* Station count badge */}
+      <div style={{
+        position: 'absolute', top: 16, left: 16, zIndex: 1000,
+        background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+        borderRadius: 20, padding: '6px 14px',
+        boxShadow: '0 1px 8px rgba(0,0,0,0.08)',
+        fontSize: 13, fontWeight: 600, color: '#1d1d1f',
+      }}>
+        {stations.length} station{stations.length !== 1 ? 's' : ''} nearby
+      </div>
       {selected && <StationDetail station={selected} areaAverage={areaAverage} fuelType={fuelType} onClose={() => setSelectedStation(null)} />}
     </div>
   )

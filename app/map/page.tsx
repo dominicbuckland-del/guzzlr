@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import MapFilters from '@/components/map/MapFilters'
+import MapFilters, { type SortMode } from '@/components/map/MapFilters'
 import StationList from '@/components/map/StationList'
 
 const FuelMap = dynamic(() => import('@/components/map/FuelMap'), {
@@ -14,14 +14,15 @@ export default function MapPage() {
   const [view, setView] = useState<'map' | 'list'>('map')
   const [fuelType, setFuelType] = useState<string>('')
   const [brandFilter] = useState<string[]>([])
+  const [sortMode, setSortMode] = useState<SortMode>('price')
 
   return (
     <div className="flex flex-col h-[calc(100dvh-80px)] bg-bg">
-      <MapFilters view={view} setView={setView} fuelType={fuelType} setFuelType={setFuelType} />
+      <MapFilters view={view} setView={setView} fuelType={fuelType} setFuelType={setFuelType} sortMode={sortMode} setSortMode={setSortMode} />
       {view === 'map' ? (
         <FuelMap fuelType={fuelType} brandFilter={brandFilter} />
       ) : (
-        <StationList fuelType={fuelType} brandFilter={brandFilter} />
+        <StationList fuelType={fuelType} brandFilter={brandFilter} sortMode={sortMode} />
       )}
     </div>
   )

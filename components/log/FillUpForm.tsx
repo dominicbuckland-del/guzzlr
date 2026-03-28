@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useGuzzlrStore } from '@/lib/store'
 import { STATIONS } from '@/seed/stations'
 import { generatePriceHistory, getLatestPrices, getAreaAverage } from '@/seed/prices'
@@ -38,6 +38,10 @@ export default function FillUpForm() {
   const fuelType = car?.fuelType || 'Diesel'
   const areaAverage = getAreaAverage(latestPrices, fuelType)
 
+  // Quick-fill suggestion
+  const typicalLitres = car ? Math.round(car.tankSizeLitres * 0.65) : 65
+  const avgPriceCpl = (areaAverage / 10).toFixed(1)
+
   useEffect(() => {
     if (stationId) {
       const stationPrice = latestPrices.find(p => p.stationId === stationId && p.fuelType === fuelType)
@@ -62,6 +66,16 @@ export default function FillUpForm() {
       setLitres(((t * 100) / p).toFixed(1))
     }
   }, [litres, priceCpl, totalDollars])
+
+  // Live running total calculation
+  const runningTotal = useMemo(() => {
+    const l = parseFloat(litres)
+    const p = parseFloat(priceCpl)
+    if (l > 0 && p > 0) {
+      return ((l * p) / 100).toFixed(2)
+    }
+    return null
+  }, [litres, priceCpl])
 
   const handleSubmit = () => {
     const l = parseFloat(litres) || 0
@@ -136,6 +150,16 @@ export default function FillUpForm() {
 
   return (
     <div className="space-y-4">
+      {/* Quick-fill suggestion */}
+      {car && (
+        <div className="bg-tint/8 rounded-[14px] px-4 py-3 flex items-start gap-3">
+          <span className="text-[20px] mt-0.5">💡</span>
+          <p className="text-text-secondary text-[13px] leading-snug">
+            Based on your {car.make} {car.model}, a typical fill is <span className="font-display font-bold text-text-primary">~{typicalLitres}L</span> at the current avg of <span className="font-display font-bold text-text-primary">{avgPriceCpl}c/L</span>
+          </p>
+        </div>
+      )}
+
       {/* Step 1: Station */}
       <div className="card bg-surface rounded-[14px] p-4">
         <h3 className="font-display font-bold text-[11px] text-text-muted mb-3 uppercase tracking-widest">Station</h3>
@@ -189,39 +213,52 @@ export default function FillUpForm() {
             <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Litres</label>
             <input
               type="number"
+              inputMode="decimal"
               value={litres}
               onChange={(e) => { setLitres(e.target.value); if (priceCpl) setTotalDollars('') }}
               placeholder="65.0"
               step="0.1"
-              className="w-full bg-white rounded-[10px] px-3 py-3 text-text-primary text-center font-display font-bold text-[17px] focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all"
+              className="w-full bg-white rounded-[10px] px-3 py-4 text-text-primary text-center font-display font-bold text-2xl focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all"
               style={{ borderBottom: '0.5px solid #d1d1d6' }}
             />
           </div>
           <div>
-            <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Price (c/L)</label>
+            <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">c/L</label>
             <input
               type="number"
+              inputMode="decimal"
               value={priceCpl}
               onChange={(e) => { setPriceCpl(e.target.value); if (litres) setTotalDollars('') }}
               placeholder="178.9"
               step="0.1"
-              className="w-full bg-white rounded-[10px] px-3 py-3 text-text-primary text-center font-display font-bold text-[17px] focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all"
+              className="w-full bg-white rounded-[10px] px-3 py-4 text-text-primary text-center font-display font-bold text-2xl focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all"
               style={{ borderBottom: '0.5px solid #d1d1d6' }}
             />
           </div>
           <div>
-            <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Total ($)</label>
+            <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Total $</label>
             <input
               type="number"
+              inputMode="decimal"
               value={totalDollars}
               onChange={(e) => { setTotalDollars(e.target.value); if (litres) setPriceCpl('') }}
               placeholder="116.29"
               step="0.01"
-              className="w-full bg-white rounded-[10px] px-3 py-3 text-text-primary text-center font-display font-bold text-[17px] focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all"
+              className="w-full bg-white rounded-[10px] px-3 py-4 text-text-primary text-center font-display font-bold text-2xl focus:outline-none focus:ring-2 focus:ring-tint/20 transition-all"
               style={{ borderBottom: '0.5px solid #d1d1d6' }}
             />
           </div>
         </div>
+
+        {/* Live running total */}
+        {runningTotal && !totalDollars && (
+          <div className="mt-3 pt-3" style={{ borderTop: '0.5px solid #d1d1d6' }}>
+            <div className="flex items-center justify-between">
+              <span className="text-text-secondary text-[13px]">Estimated total</span>
+              <span className="font-display font-bold text-text-primary text-[17px]">${runningTotal}</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Step 3: Optional extras */}
@@ -232,6 +269,7 @@ export default function FillUpForm() {
             <label className="text-text-muted text-[11px] mb-1 block uppercase tracking-widest font-display">Odometer (km)</label>
             <input
               type="number"
+              inputMode="numeric"
               value={odometer}
               onChange={(e) => setOdometer(e.target.value)}
               placeholder="45,230"

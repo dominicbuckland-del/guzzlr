@@ -38,9 +38,13 @@ export default function ProfilePage() {
   const weeklyKm = (user.commuteDistanceKm || 25) * 5
   const avgPriceCents = 1850 // approximate area average
   const weeklyCost = car ? calculateWeeklyCost(car.ratedEconomyL100km, weeklyKm, avgPriceCents) : 0
+  const monthlyCost = weeklyCost * 4.33
+  const yearlyCost = weeklyCost * 52
+
+  const memberSince = new Date(user.createdAt).toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
 
   return (
-    <div className="px-4 pt-6 space-y-4 animate-fade-in bg-bg min-h-screen">
+    <div className="px-4 pt-6 space-y-4 animate-fade-in bg-bg min-h-screen pb-8">
       <h1 className="font-display text-[22px] font-bold text-text-primary">Profile</h1>
 
       {/* Tab selector */}
@@ -60,17 +64,13 @@ export default function ProfilePage() {
 
       {section === 'profile' && (
         <div className="space-y-4 animate-fade-in">
-          {/* Car Card */}
+          {/* Hero Car Section */}
           {car && (
-            <div className="card bg-surface rounded-[14px] p-5">
-              <div className="flex items-center gap-4 mb-4">
-                <span className="text-5xl">{vehicleIcons[car.vehicleType] || '🚗'}</span>
-                <div>
-                  <h2 className="font-display text-[17px] font-bold text-text-primary">{car.year} {car.make} {car.model}</h2>
-                  <p className="text-text-secondary text-[13px] capitalize">{car.vehicleType}</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
+            <div className="card bg-surface rounded-[14px] p-6 text-center">
+              <span className="text-[72px] leading-none block mb-3">{vehicleIcons[car.vehicleType] || '🚗'}</span>
+              <h2 className="font-display text-[22px] font-bold text-text-primary">{car.year} {car.make} {car.model}</h2>
+              <p className="text-text-secondary text-[13px] capitalize mt-1">{car.vehicleType}</p>
+              <div className="grid grid-cols-3 gap-3 mt-5">
                 <div className="bg-surface-high rounded-[12px] p-3 text-center">
                   <p className="font-display font-bold text-[17px] text-text-primary">{car.tankSizeLitres}L</p>
                   <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">Tank</p>
@@ -84,10 +84,26 @@ export default function ProfilePage() {
                   <p className="text-text-muted text-[11px] uppercase tracking-widest font-display">L/100km</p>
                 </div>
               </div>
-              <div className="mt-4 pt-4" style={{ borderTop: '0.5px solid #d1d1d6' }}>
-                <p className="text-text-secondary text-[13px]">
-                  Your {car.make} {car.model} costs you <span className="text-text-primary font-display font-bold">${weeklyCost.toFixed(0)}/week</span> in fuel
-                </p>
+            </div>
+          )}
+
+          {/* Fuel Costs Summary */}
+          {car && (
+            <div className="card bg-surface rounded-[14px] p-4">
+              <h3 className="font-display font-bold text-[11px] text-text-muted mb-3 uppercase tracking-widest">Your Fuel Costs</h3>
+              <div className="space-y-0">
+                <div className="flex justify-between py-2.5" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+                  <span className="text-text-secondary text-[15px]">Weekly</span>
+                  <span className="font-display font-bold text-text-primary text-[15px]">${weeklyCost.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between py-2.5" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+                  <span className="text-text-secondary text-[15px]">Monthly</span>
+                  <span className="font-display font-bold text-text-primary text-[15px]">${monthlyCost.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between py-2.5">
+                  <span className="text-text-secondary text-[15px]">Yearly projection</span>
+                  <span className="font-display font-bold text-text-primary text-[15px]">${yearlyCost.toFixed(0)}</span>
+                </div>
               </div>
             </div>
           )}
@@ -103,26 +119,35 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Stats */}
+          {/* Stats -- iOS grouped rows */}
           <div className="card bg-surface rounded-[14px] p-4">
             <h3 className="font-display font-bold text-[11px] text-text-muted mb-3 uppercase tracking-widest">Your Stats</h3>
             <div className="space-y-0">
-              <div className="flex justify-between py-2.5" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
-                <span className="text-text-secondary text-[15px]">Total saved</span>
+              <div className="flex justify-between items-center py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+                <span className="text-text-primary text-[15px]">Total saved</span>
                 <span className="font-display font-bold text-success text-[15px]">${(user.totalSavedCents / 100).toFixed(2)}</span>
               </div>
-              <div className="flex justify-between py-2.5" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
-                <span className="text-text-secondary text-[15px]">Current streak</span>
+              <div className="flex justify-between items-center py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+                <span className="text-text-primary text-[15px]">Current streak</span>
                 <span className="font-display font-bold text-text-primary text-[15px]">{user.streakCount} days</span>
               </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-text-secondary text-[15px]">Member since</span>
-                <span className="text-[15px] text-text-primary">{new Date(user.createdAt).toLocaleDateString('en-AU', { month: 'short', year: 'numeric' })}</span>
+              <div className="flex justify-between items-center py-3" style={{ borderBottom: '0.5px solid #d1d1d6' }}>
+                <span className="text-text-primary text-[15px]">Fill-ups logged</span>
+                <span className="text-text-secondary text-[15px]">{user.xp > 0 ? Math.floor(user.xp / 50) : 0}</span>
+              </div>
+              <div className="flex justify-between items-center py-3">
+                <span className="text-text-primary text-[15px]">Level</span>
+                <span className="text-text-secondary text-[15px]">{levelInfo.level} -- {levelInfo.name}</span>
               </div>
             </div>
           </div>
 
           <DriverBenchmark />
+
+          {/* Member since footer */}
+          <p className="text-center text-text-muted text-[13px] pt-2 pb-4">
+            Member since {memberSince}
+          </p>
         </div>
       )}
 

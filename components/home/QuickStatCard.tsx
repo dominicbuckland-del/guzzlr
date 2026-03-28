@@ -24,15 +24,29 @@ export default function QuickStatCard({ type }: Props) {
         return <>
           <p className="text-text-muted text-[11px] font-semibold uppercase tracking-wider">Cheapest</p>
           <p className="text-[13px] font-medium truncate mt-1">{cheapest.name}</p>
-          <p className="price-ticker text-[22px] mt-1">{formatPrice(cheapest.price)}<span className="text-text-muted text-[13px] font-normal ml-0.5">c/L</span></p>
-          {car && <p className="text-tint text-[13px] font-medium mt-1">${calculateFillCost(cheapest.price, car.tankSizeLitres).toFixed(2)} fill</p>}
+          <div className="flex items-baseline gap-1.5 mt-1">
+            <p className="price-ticker text-[22px]">{formatPrice(cheapest.price)}<span className="text-text-muted text-[13px] font-normal ml-0.5">c/L</span></p>
+          </div>
+          <p className="text-tint text-[13px] font-semibold mt-1">{cheapest.distance} km away</p>
+          {car && <p className="text-text-secondary text-[12px] mt-0.5">${calculateFillCost(cheapest.price, car.tankSizeLitres).toFixed(2)} fill</p>}
         </>
       }
       case 'weekly': {
-        const spend = fillups.filter(f => new Date(f.filledAt) > new Date(Date.now() - 7*24*60*60*1000)).reduce((s, f) => s + f.totalCostCents, 0) / 100
+        const thisWeekSpend = fillups.filter(f => new Date(f.filledAt) > new Date(Date.now() - 7*24*60*60*1000)).reduce((s, f) => s + f.totalCostCents, 0) / 100
+        const lastWeekSpend = fillups.filter(f => {
+          const d = new Date(f.filledAt).getTime()
+          return d > Date.now() - 14*24*60*60*1000 && d <= Date.now() - 7*24*60*60*1000
+        }).reduce((s, f) => s + f.totalCostCents, 0) / 100
+        const diff = lastWeekSpend > 0 ? thisWeekSpend - lastWeekSpend : 0
+        const diffPct = lastWeekSpend > 0 ? Math.round((diff / lastWeekSpend) * 100) : 0
         return <>
           <p className="text-text-muted text-[11px] font-semibold uppercase tracking-wider">This Week</p>
-          <AnimatedNumber value={spend} prefix="$" className="price-ticker text-[22px] block mt-1" />
+          <AnimatedNumber value={thisWeekSpend} prefix="$" className="price-ticker text-[22px] block mt-1" />
+          {lastWeekSpend > 0 && (
+            <p className={`text-[12px] font-medium mt-1 ${diff <= 0 ? 'text-success' : 'text-error'}`}>
+              {diff <= 0 ? '↓' : '↑'} {Math.abs(diffPct)}% vs last week
+            </p>
+          )}
         </>
       }
       case 'saved': {
@@ -46,7 +60,7 @@ export default function QuickStatCard({ type }: Props) {
       case 'streak':
         return <>
           <p className="text-text-muted text-[11px] font-semibold uppercase tracking-wider">Streak</p>
-          <p className="price-ticker text-[22px] mt-1">🔥 {user.streakCount}</p>
+          <p className="price-ticker text-[22px] mt-1">{user.streakCount}</p>
           <p className="text-text-muted text-[11px] mt-1">in a row</p>
         </>
     }

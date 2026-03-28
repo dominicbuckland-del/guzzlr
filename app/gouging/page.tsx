@@ -46,16 +46,21 @@ export default function GougingPage() {
   }, [car])
 
   const handleShare = async (gouger: any) => {
-    const text = `GUZZLR GOUGING REPORT\n\n${gouger.station.name} is charging ${(gouger.aboveAverageCents / 10).toFixed(1)}c/L ABOVE AVERAGE\n\nThat's $${gouger.overchargeDollars.toFixed(2)} extra on a full tank of a ${car?.make} ${car?.model}.\n\n#StopTheGouge\nDownload Guzzlr`
+    const aboveCpl = (gouger.aboveAverageCents / 10).toFixed(1)
+    const text = `🚨 GOUGING ALERT: ${gouger.station.name} (${gouger.station.suburb})\n\nCharging ${aboveCpl}c/L ABOVE the area average of ${formatPrice(gouger.areaAverageCents)}c/L.\n\nThat's an extra $${gouger.overchargeDollars.toFixed(2)} per tank on a ${car?.year || ''} ${car?.make || ''} ${car?.model || ''}.\n\nDon't fill here. Check Guzzlr for cheaper options nearby.\n\n#Guzzlr #StopTheGouge #FuelPrices`
 
     if (navigator.share) {
       try {
-        await navigator.share({ text, title: 'Guzzlr Gouging Report' })
+        await navigator.share({ text, title: `Gouging Alert: ${gouger.station.name}` })
       } catch {}
     } else {
       await navigator.clipboard.writeText(text)
       alert('Copied to clipboard!')
     }
+  }
+
+  const handleReport = (gouger: any) => {
+    alert(`Report submitted for ${gouger.station.name}. We'll review this station's pricing behaviour. Thanks for helping keep fuel fair.`)
   }
 
   if (loading) {
@@ -70,9 +75,10 @@ export default function GougingPage() {
 
   const now = new Date()
   const weekStr = `Week of ${now.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })}`
+  const worstOffender = gougers.length > 0 ? gougers[0] : null
 
   return (
-    <div className="px-4 pt-6 space-y-4 animate-fade-in bg-bg min-h-screen">
+    <div className="px-4 pt-6 space-y-4 animate-fade-in bg-bg min-h-screen pb-8">
       <div>
         <h1 className="font-display text-[22px] font-bold text-text-primary">Gouging Report</h1>
         <p className="text-text-secondary text-[13px]">{weekStr}</p>
@@ -100,9 +106,29 @@ export default function GougingPage() {
 
       {tab === 'gougers' ? (
         <div className="space-y-3">
-          <p className="text-error font-display font-bold text-[13px] uppercase tracking-widest">
-            This Week&apos;s Biggest Rip-Offs
-          </p>
+          {/* Worst Offender Hero Card */}
+          {worstOffender && (
+            <div className="card bg-error/8 border border-error/20 rounded-[14px] p-5">
+              <p className="text-error font-display font-bold text-[11px] uppercase tracking-widest mb-3">Worst Offender</p>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-12 h-12 rounded-full bg-error/15 flex items-center justify-center">
+                  <span className="text-[24px]">🚩</span>
+                </div>
+                <div>
+                  <p className="font-display font-bold text-[17px] text-text-primary">{worstOffender.station.name}</p>
+                  <p className="text-text-muted text-[13px]">{worstOffender.station.suburb}</p>
+                </div>
+              </div>
+              <div className="flex items-baseline gap-2 mb-2">
+                <span className="font-display font-bold text-[28px] text-error">{(worstOffender.aboveAverageCents / 10).toFixed(1)}c/L</span>
+                <span className="text-text-muted text-[13px]">above average</span>
+              </div>
+              <p className="text-text-secondary text-[13px]">
+                Costing you an extra <span className="font-display font-bold text-error">${worstOffender.overchargeDollars.toFixed(2)}</span> per tank
+              </p>
+            </div>
+          )}
+
           <p className="text-text-muted text-[11px]">
             Area average: {formatPrice(areaAverage)}c/L (E10)
           </p>
@@ -135,13 +161,20 @@ export default function GougingPage() {
                 )}
               </div>
 
-              <button
-                onClick={() => handleShare(g)}
-                className="w-full bg-surface-high rounded-[12px] py-2.5 text-[13px] font-display font-bold text-text-secondary tap-active flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
-              >
-                <span className="material-symbols-outlined text-[13px]">share</span>
-                Share
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleShare(g)}
+                  className="flex-1 bg-surface-high rounded-[12px] py-2.5 text-[13px] font-display font-bold text-text-secondary tap-active flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+                >
+                  Share
+                </button>
+                <button
+                  onClick={() => handleReport(g)}
+                  className="flex-1 bg-surface-high rounded-[12px] py-2.5 text-[13px] font-display font-bold text-error/80 tap-active flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+                >
+                  Report Station
+                </button>
+              </div>
             </div>
           ))}
         </div>

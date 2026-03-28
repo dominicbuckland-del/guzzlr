@@ -3,6 +3,8 @@
 import { MOCK_USERS } from '@/seed/users'
 import { getLevelInfo } from '@/lib/constants'
 
+const MEDALS: Record<number, string> = { 1: '\uD83E\uDD47', 2: '\uD83E\uDD48', 3: '\uD83E\uDD49' }
+
 export default function Leaderboard() {
   return (
     <div className="space-y-4 animate-fade-in">
@@ -11,22 +13,31 @@ export default function Leaderboard() {
       <div>
         {MOCK_USERS.map((entry, i) => {
           const level = getLevelInfo(entry.level === 6 ? 5000 : entry.level === 5 ? 2500 : entry.level === 4 ? 1000 : entry.level === 3 ? 500 : entry.level === 2 ? 200 : 0)
+          const medal = MEDALS[entry.rank]
           return (
             <div
               key={entry.rank}
-              className="flex items-center gap-3 py-3"
-              style={i < MOCK_USERS.length - 1 ? { borderBottom: '0.5px solid #d1d1d6' } : {}}
+              className={`flex items-center gap-3 py-3 ${entry.isCurrentUser ? 'rounded-[10px] px-3 -mx-3' : ''}`}
+              style={{
+                ...(i < MOCK_USERS.length - 1 && !entry.isCurrentUser ? { borderBottom: '0.5px solid #d1d1d6' } : {}),
+                ...(entry.isCurrentUser ? { backgroundColor: 'rgba(0, 122, 255, 0.06)' } : {}),
+              }}
             >
               <div className={`w-8 h-8 rounded-full flex items-center justify-center font-display font-bold text-[13px] ${
                 entry.rank <= 3 ? 'bg-text-primary text-white' : 'bg-surface text-text-muted'
               }`}>
-                {entry.rank}
+                {medal || entry.rank}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <p className="font-medium text-[15px] truncate text-text-primary">
+                  <p className={`font-medium text-[15px] truncate ${entry.isCurrentUser ? 'text-tint' : 'text-text-primary'}`}>
                     {entry.displayName}
                   </p>
+                  {entry.isCurrentUser && (
+                    <span className="text-[11px] font-display font-bold uppercase tracking-widest px-1.5 py-0.5 rounded-full" style={{ backgroundColor: 'rgba(0, 122, 255, 0.12)', color: '#007AFF' }}>
+                      You
+                    </span>
+                  )}
                   <span className="text-[11px]">{level.icon}</span>
                 </div>
                 <p className="text-text-muted text-[11px]">{entry.carModel}</p>
